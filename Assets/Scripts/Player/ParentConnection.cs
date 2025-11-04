@@ -1,0 +1,57 @@
+using UnityEngine;
+
+public class ParentConnection : MonoBehaviour
+{
+    private Sword sword;
+
+    private PlayerController playerController;
+
+    private SwordHitbox swordHitbox;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        sword = GetComponentInParent<Sword>();
+        playerController = GetComponentInParent<PlayerController>();
+        swordHitbox = GetComponent<SwordHitbox>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+    public void TakeSword()
+    {
+        sword?.PlaceSwordToHand();
+    }
+
+    public void SaveSword()
+    {
+        sword?.PlaceSwordToBack();
+    }
+
+    public void S2()
+    {
+        sword?.Slash2();
+    }
+    public void S3()
+    {
+        sword?.Slash3();
+    }
+    public void S3END()
+    {
+        playerController?.JumpingSlashFinished();
+    }
+
+    public void P()
+    {
+        sword?.Parry();
+    }
+
+    public void PEND()
+    {
+    sword?.FinishParry();
+    }
+
+}
