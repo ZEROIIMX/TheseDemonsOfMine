@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!159 &1
@@ -47,3 +48,8 @@ EditorSettings:
   m_CacheServerDownloadBatchSize: 128
   m_EnableEnlightenBakedGI: 0
   m_ReferencedClipsExactNaming: 1
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:1ef9414984ae135d74e2d05dfbeb10a04ca7f8434b867c2b2053f46b78a365a6
+size 1545
+>>>>>>> 3fb8ee7e49c253fcb064da0f90ae83619f7a48a4

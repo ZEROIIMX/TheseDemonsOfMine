@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
@@ -32,3 +33,8 @@ MonoBehaviour:
     linkText: Submit a report
     url: https://unity3d.com/unity/qa/bug-reporting
   loadedLayout: 1
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:6d098604e909b6a0e64fe5910c2719704864d49678bcf5413bd47b67e5490107
+size 1144
+>>>>>>> 3fb8ee7e49c253fcb064da0f90ae83619f7a48a4

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!310 &1
@@ -34,3 +35,8 @@ UnityConnectSettings:
     m_GameId: 
   PerformanceReportingSettings:
     m_Enabled: 0
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:d6034acbef6c9e3179866486c31eab81fcbe5e7ed350ce71e0fa2b1449b77109
+size 943
+>>>>>>> 3fb8ee7e49c253fcb064da0f90ae83619f7a48a4

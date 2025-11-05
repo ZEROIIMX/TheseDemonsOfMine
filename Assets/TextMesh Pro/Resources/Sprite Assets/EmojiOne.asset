@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2103686
@@ -657,3 +658,8 @@ Material:
     m_TexEnvs: []
     m_Floats: []
     m_Colors: []
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:155fff99f467baa93dd2d0886df466bd242cd5e3c8c60c9d43e9cdad269f7f54
+size 13441
+>>>>>>> 3fb8ee7e49c253fcb064da0f90ae83619f7a48a4

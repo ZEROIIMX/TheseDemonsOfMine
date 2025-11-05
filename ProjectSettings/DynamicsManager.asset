@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!55 &1
@@ -34,3 +35,8 @@ PhysicsManager:
   m_EnableUnifiedHeightmaps: 1
   m_SolverType: 0
   m_DefaultMaxAngularSpeed: 50
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:b7c9a9dc08b98990109d4346f68745e15e238de400f96c583e53e1c83c743a78
+size 1254
+>>>>>>> 3fb8ee7e49c253fcb064da0f90ae83619f7a48a4

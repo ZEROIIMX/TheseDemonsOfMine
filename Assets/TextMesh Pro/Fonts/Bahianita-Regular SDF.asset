@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
@@ -2803,3 +2804,8 @@ Material:
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:817f80c0968f102a7f87ba1e82b925a407e6aba7854a01376ec05e18e9030048
+size 581738
+>>>>>>> 3fb8ee7e49c253fcb064da0f90ae83619f7a48a4

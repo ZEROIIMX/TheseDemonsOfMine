@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &-7893295128165547882
@@ -157,3 +158,8 @@ MonoBehaviour:
   clamp:
     m_OverrideState: 0
     m_Value: 0.05
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:864db79d61e2c0be6535f0444505a0f116f3d42b49d5d23d81a25cdf645c3178
+size 3705
+>>>>>>> 3fb8ee7e49c253fcb064da0f90ae83619f7a48a4

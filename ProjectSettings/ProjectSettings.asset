@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!129 &1
@@ -940,3 +941,8 @@ PlayerSettings:
   androidVulkanAllowFilterList: []
   androidVulkanDeviceFilterListAsset: {fileID: 0}
   d3d12DeviceFilterListAsset: {fileID: 0}
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:0a29fcf2f25f9d987426f4508f7555319fc78ca9325ae6358ba68ec9a0970c37
+size 25395
+>>>>>>> 3fb8ee7e49c253fcb064da0f90ae83619f7a48a4
