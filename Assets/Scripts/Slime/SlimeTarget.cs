@@ -6,6 +6,7 @@ public class SlimeTarget : MonoBehaviour
 {
     public Transform Target;
     public float AttackDistance;
+    public float ActivationDistance;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -28,6 +29,19 @@ public class SlimeTarget : MonoBehaviour
     {
         if (Target == null) return;
 
+        float distance = Vector3.Distance(transform.position, Target.position);
+
+        if (distance > ActivationDistance)
+        {
+            if (isChasing)
+            {
+                isChasing = false;
+                slime.SetChaseState(false);
+            }
+            agent.isStopped = true;
+            return;
+        }
+
         if (slime.IsBusy())
         {
             if (isChasing)
@@ -36,8 +50,6 @@ public class SlimeTarget : MonoBehaviour
             }
             return;
         }
-
-        float distance = Vector3.Distance(transform.position, Target.position);
 
         if (distance <= AttackDistance)
         {
