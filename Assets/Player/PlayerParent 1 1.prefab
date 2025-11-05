@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 5555022700549230268}
   - component: {fileID: 7906033708448706697}
   - component: {fileID: 6955122583248879521}
+  - component: {fileID: 3027433840155980550}
   m_Layer: 3
   m_Name: PlayerParent 1 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -346,6 +347,20 @@ MonoBehaviour:
   attackCd: 0.5
   saveCd: 5
   parryCd: 3
+--- !u!114 &3027433840155980550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140517843327284925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b111721bbbf3d4385a19d52dd87b22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &7125377073420936351
 GameObject:
   m_ObjectHideFlags: 0
