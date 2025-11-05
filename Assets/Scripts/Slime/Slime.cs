@@ -8,6 +8,8 @@ public class Slime : MonoBehaviour
     [Header("Stats")]
     [SerializeField] public float MaxHealth;
     [SerializeField] public float Health;
+    [SerializeField] public float HealthUpgrade1;
+    [SerializeField] public float HealthUpgrade2;
 
     [Header("Grab Mechanic")]
     [SerializeField] private float grabCooldown = 5f;
@@ -24,12 +26,16 @@ public class Slime : MonoBehaviour
     private SlimeTarget slimeTarget;
     private Animator m_animator;
     private Vector3 initialScale;
+    private float initialMaxHealth;
+    private float initialHealth;
     private Coroutine scalingCoroutine;
     private void Start()
     {
         slimeTarget = GetComponent<SlimeTarget>();
         m_animator = GetComponent<Animator>();
         initialScale = transform.localScale;
+        initialMaxHealth = MaxHealth;
+        initialHealth = Health;
     }
 
     private void Update()
@@ -129,17 +135,36 @@ public class Slime : MonoBehaviour
 
         if (scalingCoroutine != null) StopCoroutine(scalingCoroutine);
         scalingCoroutine = StartCoroutine(ScaleOverTime(initialScale, scaleDuration));
+
+        MaxHealth = initialMaxHealth;
+        Health = initialHealth;
     }
 
     private IEnumerator ScaleOverTime(Vector3 targetScale, float duration)
     {
         Vector3 startScale = transform.localScale;
         float timer = 0f;
+        bool isScalingUp = targetScale.x > startScale.x;
 
         while (timer < duration)
         {
             transform.localScale = Vector3.Lerp(startScale, targetScale, timer / duration);
             timer += Time.deltaTime;
+
+            if (isScalingUp)
+            {
+                if (transform.localScale.x >= 1.75f && MaxHealth < HealthUpgrade1)
+                {
+                    MaxHealth = HealthUpgrade1;
+                    Health = MaxHealth;
+                }
+                if (transform.localScale.x >= 2.49f && MaxHealth < HealthUpgrade2)
+                {
+                    MaxHealth = HealthUpgrade2;
+                    Health = MaxHealth;
+                }
+            }
+
             yield return null;
         }
 
