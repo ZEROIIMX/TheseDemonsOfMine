@@ -36,12 +36,10 @@ public class SlimeTarget : MonoBehaviour
         {
             if (distance > ActivationDistance)
             {
-                // Still outside activation range — do nothing
                 return;
             }
             else
             {
-                // Player entered activation range — activate slime
                 Activated = true;
             }
         }
@@ -62,7 +60,6 @@ public class SlimeTarget : MonoBehaviour
             {
                 isChasing = false;
                 slime.SetChaseState(false);
-                Activated = false;
             }
             agent.isStopped = true;
         }

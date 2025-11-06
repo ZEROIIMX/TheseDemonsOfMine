@@ -13,8 +13,6 @@ public class Slime : MonoBehaviour
 
     [Header("Grab Mechanic")]
     [SerializeField] private float grabCooldown = 5f;
-    [SerializeField] private int clicksToEscape = 5;
-    [SerializeField] private float struggleDuration = 4f;
     [SerializeField] private float damagePerTick = 5f;
     [SerializeField] private float damageInterval = 0.5f;
 
@@ -23,6 +21,7 @@ public class Slime : MonoBehaviour
     [SerializeField] private float scaleDuration = 3.0f;
 
     private bool isStruggling = false;
+    private bool isDead = false;
     private SlimeTarget slimeTarget;
     private Animator m_animator;
     private Vector3 initialScale;
@@ -40,19 +39,20 @@ public class Slime : MonoBehaviour
 
     private void Update()
     {
-        if (Health <= 0)
+        if (Health <= 0 && !isDead)
         {
-            Destroy(gameObject);
+            StartCoroutine(Die());
         }
     }
 
     public bool IsBusy()
     {
-        return isStruggling;
+        return isStruggling || isDead;
     }
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
         Health -= damage;
     }
 
@@ -72,7 +72,7 @@ public class Slime : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isStruggling)
+        if (other.CompareTag("Player") && !isStruggling && !isDead)
         {
             if (other.TryGetComponent<PlayerController>(out var playerMovement))
             {
@@ -89,7 +89,11 @@ public class Slime : MonoBehaviour
         HandleStruggleStart(playerMovement);
         yield return StartCoroutine(StruggleLoop(playerMovement));
         HandleStruggleEnd(playerMovement);
-        yield return new WaitForSeconds(grabCooldown);
+
+        if (!isDead)
+        {
+            yield return new WaitForSeconds(grabCooldown);
+        }
         isStruggling = false;
     }
 
@@ -109,11 +113,9 @@ public class Slime : MonoBehaviour
     private IEnumerator StruggleLoop(PlayerController playerMovement)
     {
         var playerHealth = playerMovement.GetComponent<PlayerHealth>();
-        int clickCount = 0;
-        float struggleTimer = 0f;
         float damageTickTimer = 0f;
 
-        while (struggleTimer < struggleDuration)
+        while (Health > 0)
         {
             if (playerMovement == null) yield break;
 
@@ -124,9 +126,6 @@ public class Slime : MonoBehaviour
                 if (playerHealth != null) playerHealth.TakeDamage(damagePerTick);
                 damageTickTimer = 0f;
             }
-            if (Mouse.current.leftButton.wasPressedThisFrame) clickCount++;
-            if (clickCount >= clicksToEscape) break;
-            struggleTimer += Time.deltaTime;
             yield return null;
         }
     }
@@ -140,6 +139,19 @@ public class Slime : MonoBehaviour
         if (slimeTarget != null) slimeTarget.enabled = true;
 
         if (scalingCoroutine != null) StopCoroutine(scalingCoroutine);
+    }
+
+    private IEnumerator Die()
+    {
+        isDead = true;
+        if (m_animator != null)
+        {
+            m_animator.SetTrigger("Die");
+        }
+
+        yield return new WaitForSeconds(2f); // Length of death animation
+
+        Destroy(gameObject);
     }
 
     private IEnumerator ScaleOverTime(Vector3 targetScale, float duration)
