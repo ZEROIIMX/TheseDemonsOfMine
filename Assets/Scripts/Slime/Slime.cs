@@ -27,9 +27,11 @@ public class Slime : MonoBehaviour
     private float initialMaxHealth;
     private float initialHealth;
     private Coroutine scalingCoroutine;
+    public Rigidbody rb;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         slimeTarget = GetComponent<SlimeTarget>();
         m_animator = GetComponentInChildren<Animator>();
         initialScale = transform.localScale;

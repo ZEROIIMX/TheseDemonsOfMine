@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class SwordHitbox : MonoBehaviour
 {
@@ -17,8 +18,11 @@ public class SwordHitbox : MonoBehaviour
 
     private int damageAmount;
 
+    private PlayerController playerController;
+    [SerializeField] private float pushForce;
     void Start()
     {
+        playerController = GetComponentInParent<PlayerController>();
         hitbox = GetComponent<Collider>();
         hitbox.enabled = false;
         sword = GetComponentInParent<Sword>();
@@ -50,7 +54,23 @@ public class SwordHitbox : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            var enemy = collision.gameObject.GetComponent<Slime>();
+            var direction = (collision.transform.position - playerController.transform.position).normalized;
+            enemy.rb.AddForce(direction * pushForce,ForceMode.Impulse);
+            StartCoroutine(DelayedStopEnemyRigidbody(enemy.rb));
+            //----> spawn a particle on this position you idiot hilario    collision.contacts[0].point;
 
+        }
+    }
+    IEnumerator DelayedStopEnemyRigidbody(Rigidbody rb)
+    {
+        yield return new WaitForSeconds(0.3f);
+        rb.linearVelocity = Vector3.zero;
+    }
     public void ParryHitbox()
     {
     parry = true;
