@@ -64,4 +64,23 @@ public class ParentConnection : MonoBehaviour
         swordHitbox?.S1HitboxEnd();
     }
 
+    public void S2HB()
+    {  
+        swordHitbox?.S2Hitbox();
+    }
+
+    public void S2HBEnd()
+    {
+        swordHitbox.S2HitboxEnd();
+    }
+
+    public void S3HB()
+    {
+        swordHitbox?.S3Hitbox();
+    }
+
+    public void S3HBEnd()
+    {
+        swordHitbox?.S3HitboxEnd();
+    }
 }

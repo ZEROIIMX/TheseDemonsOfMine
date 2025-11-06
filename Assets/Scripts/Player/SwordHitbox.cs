@@ -15,7 +15,7 @@ public class SwordHitbox : MonoBehaviour
 
     private bool s3 = false;
 
-    private int damageAmount = 50;
+    private int damageAmount;
 
     void Start()
     {
