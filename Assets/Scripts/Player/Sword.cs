@@ -192,16 +192,6 @@ public class Sword : MonoBehaviour
         equipped = false;
     }
 
-    public void HitboxOn()
-    {
-        SwordHitbox?.EnableHitbox();
-    }
-
-    public void HitboxOFF()
-    {
-        SwordHitbox?.DisableHitbox();
-    }
-
     public void Slash2()
     {
         slash2 = true;
@@ -260,6 +250,7 @@ public class Sword : MonoBehaviour
         playerController?.Parrying();
         RestartParryCooldown();
         RestartSaveCooldown();
+        SwordHitbox?.ParryHitbox();
 
         if (attackOnCooldown && !s2 && !s3)
         {
@@ -279,8 +270,7 @@ public class Sword : MonoBehaviour
     {
         isParrying = false;
         playerController?.ParryEnd();
-        SwordHitbox?.DisableHitbox();
-        Debug.Log("ParryEnd");
+        SwordHitbox?.ParryHitboxEnd();
     }
 
     public void setS3False()
