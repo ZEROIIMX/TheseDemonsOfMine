@@ -20,7 +20,7 @@ public class SwordHitbox : MonoBehaviour
     void Start()
     {
         hitbox = GetComponent<Collider>();
-        hitbox.enabled = true;
+        hitbox.enabled = false;
         sword = GetComponentInParent<Sword>();
     }
 
@@ -35,7 +35,6 @@ public class SwordHitbox : MonoBehaviour
             else if (s1)
             {
                 damageAmount = 50;
-                Debug.Log("S1HBACTIVE");
             }
             else if (s2)
             {

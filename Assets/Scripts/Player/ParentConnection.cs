@@ -13,7 +13,7 @@ public class ParentConnection : MonoBehaviour
     {
         sword = GetComponentInParent<Sword>();
         playerController = GetComponentInParent<PlayerController>();
-        swordHitbox = GetComponent<SwordHitbox>();
+        swordHitbox = GetComponentInChildren<SwordHitbox>();
     }
 
     // Update is called once per frame
@@ -56,7 +56,7 @@ public class ParentConnection : MonoBehaviour
 
     public void S1HB()
     {
-    swordHitbox?.S1Hitbox(); 
+    swordHitbox?.S1Hitbox();
     }
 
     public void S1HBEnd()

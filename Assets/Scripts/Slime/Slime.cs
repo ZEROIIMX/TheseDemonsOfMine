@@ -166,6 +166,7 @@ public class Slime : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         Health -= damageAmount;
+        m_animator.SetTrigger("OnHit");
 
         if (Health <= 0)
         {

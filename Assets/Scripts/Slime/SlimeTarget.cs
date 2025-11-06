@@ -9,7 +9,7 @@ public class SlimeTarget : MonoBehaviour
     public float ActivationDistance;
 
     private NavMeshAgent agent;
-    private Animator animator;
+    private Animator m_animator;
     private Slime slime;
     private bool isChasing = false;
     private bool Activated = false;
@@ -17,7 +17,7 @@ public class SlimeTarget : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        m_animator = GetComponentInChildren<Animator>();
         slime = GetComponent<Slime>();
 
         if (Target == null && AIManager.Instance != null)
@@ -50,6 +50,7 @@ public class SlimeTarget : MonoBehaviour
             {
                 isChasing = false;
                 Activated = false;
+                m_animator.SetBool("Walk", false);
             }
             return;
         }
@@ -60,6 +61,7 @@ public class SlimeTarget : MonoBehaviour
             {
                 isChasing = false;
                 slime.SetChaseState(false);
+                m_animator.SetBool("Walk", false);
             }
             agent.isStopped = true;
         }
@@ -69,6 +71,7 @@ public class SlimeTarget : MonoBehaviour
             {
                 isChasing = true;
                 slime.SetChaseState(true);
+                m_animator.SetBool("Walk", true);
             }
             agent.isStopped = false;
             agent.destination = Target.position;
