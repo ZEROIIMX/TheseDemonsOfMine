@@ -28,6 +28,11 @@ public class Slime : MonoBehaviour
     private float initialMaxHealth;
     private float initialHealth;
     private Coroutine scalingCoroutine;
+
+    private Animator animator;
+
+    public Collider slimeCollider;
+
     private void Start()
     {
         slimeTarget = GetComponent<SlimeTarget>();
@@ -35,25 +40,21 @@ public class Slime : MonoBehaviour
         initialScale = transform.localScale;
         initialMaxHealth = MaxHealth;
         initialHealth = Health;
+        animator = GetComponentInChildren<Animator>();
+        slimeCollider = GetComponent<Collider>();
     }
 
     private void Update()
     {
         if (Health <= 0 && !isDead)
         {
-            StartCoroutine(Die());
+            m_animator.SetTrigger("Die");
         }
     }
 
     public bool IsBusy()
     {
         return isStruggling || isDead;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        if (isDead) return;
-        Health -= damage;
     }
 
     public void SetChaseState(bool isChasing)
@@ -141,16 +142,8 @@ public class Slime : MonoBehaviour
         if (scalingCoroutine != null) StopCoroutine(scalingCoroutine);
     }
 
-    private IEnumerator Die()
+    public void Die()
     {
-        isDead = true;
-        if (m_animator != null)
-        {
-            m_animator.SetTrigger("Die");
-        }
-
-        yield return new WaitForSeconds(2f); // Length of death animation
-
         Destroy(gameObject);
     }
 
@@ -185,4 +178,12 @@ public class Slime : MonoBehaviour
         transform.localScale = targetScale;
         scalingCoroutine = null;
     }
+
+    public void TakeDamage(int damageAmount)
+    {
+        Debug.Log($"Slime took {damageAmount} damage.");
+        Health -= damageAmount;
+        if (Health <= 0) Die();
+    }
+
 }

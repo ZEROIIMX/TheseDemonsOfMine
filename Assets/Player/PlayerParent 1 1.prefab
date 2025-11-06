@@ -472,9 +472,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 254bcab2110304743bf5e5f03dfed434, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5764558560736751539}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 254bcab2110304743bf5e5f03dfed434, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2941866483922996019}
   m_SourcePrefab: {fileID: 100100000, guid: 254bcab2110304743bf5e5f03dfed434, type: 3}
 --- !u!4 &2820458296085133556 stripped
@@ -487,21 +484,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 254bcab2110304743bf5e5f03dfed434, type: 3}
   m_PrefabInstance: {fileID: 2355099605546852127}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5764558560736751539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3201944216569995854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec7672cb6abab9847a1de39f5c16b894, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!136 &2941866483922996019
 CapsuleCollider:
   m_ObjectHideFlags: 0

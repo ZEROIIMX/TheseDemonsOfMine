@@ -54,4 +54,14 @@ public class ParentConnection : MonoBehaviour
     sword?.FinishParry();
     }
 
+    public void S1HB()
+    {
+    swordHitbox?.S1Hitbox(); 
+    }
+
+    public void S1HBend()
+    {
+        swordHitbox?.S1HitboxEnd();
+    }
+
 }
