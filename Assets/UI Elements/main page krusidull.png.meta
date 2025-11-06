@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8a3a9130dd145304482b1f07aaa42be9
+guid: 23f996c72bcdf514f927031e23a4c5de
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -93,30 +93,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frame 27_0
+      name: main page krusidull_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1440
-        width: 1280
-        height: 720
+        y: 1500
+        width: 1500
+        height: 1500
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e42e7c7905eb864c8b3206d204064f7
-      internalID: -179611385
+      spriteID: 8103ac1d3ed8c704bac0fab9136fdd3e
+      internalID: -1809097323
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frame 27_1
+      name: main page krusidull_1
       rect:
         serializedVersion: 2
-        x: 1280
-        y: 1440
-        width: 1280
-        height: 720
+        x: 1500
+        y: 1500
+        width: 1500
+        height: 1500
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da7d6460280f8ea41876ac98beea66f3
-      internalID: -1083872227
+      spriteID: 9cf4577f803b76d4887d9a5189d974f9
+      internalID: -120695739
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frame 27_2
+      name: main page krusidull_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 720
-        width: 1280
-        height: 720
+        x: 3000
+        y: 1500
+        width: 1500
+        height: 1500
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,42 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79f3c68c4a9871c49b6172b59582faf9
-      internalID: -1527127957
+      spriteID: a16e0bfef11b09e49905d156d81a7c59
+      internalID: -1026961475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frame 27_3
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 720
-        width: 1280
-        height: 720
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9f1fee645a20e041bd7a10c7246adf0
-      internalID: 1420009857
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Frame 27_4
+      name: main page krusidull_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1280
-        height: 720
+        width: 1500
+        height: 1500
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,20 +178,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a5e2a6534f6dc2459d1fef65112fc18
-      internalID: -1951660871
+      spriteID: 7c53eea178d3ceb4691a44a264f158af
+      internalID: 1009287924
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frame 27_5
+      name: main page krusidull_4
       rect:
         serializedVersion: 2
-        x: 1280
+        x: 1500
         y: 0
-        width: 1280
-        height: 720
+        width: 1500
+        height: 1500
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f9fab3ef18c9504c9a421214c890fd6
-      internalID: -411635630
+      spriteID: 7abd5c255662df14db979815cbc717e2
+      internalID: -2138650045
       vertices: []
       indices: 
       edges: []
@@ -245,7 +210,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: db6d69b985ed6434b91587dadfdbb3a2
+    spriteID: 86c66cabb1023994c8358ab088e02528
     internalID: 0
     vertices: []
     indices: 
@@ -255,14 +220,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1280.0,"y":720.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1500.0,"y":1500.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Frame 27_0: -179611385
-      Frame 27_1: -1083872227
-      Frame 27_2: -1527127957
-      Frame 27_3: 1420009857
-      Frame 27_4: -1951660871
-      Frame 27_5: -411635630
+      main page krusidull_0: -1809097323
+      main page krusidull_1: -120695739
+      main page krusidull_2: -1026961475
+      main page krusidull_3: 1009287924
+      main page krusidull_4: -2138650045
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
