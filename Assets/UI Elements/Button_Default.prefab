@@ -279,9 +279,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   textTarget: {fileID: 9081022227530204637}
-  minScale: 0.98
-  maxScale: 1.1
-  speed: 1
+  minScale: 1
+  maxScale: 1.05
+  speed: 10
 --- !u!1 &4989009778143841147
 GameObject:
   m_ObjectHideFlags: 0
