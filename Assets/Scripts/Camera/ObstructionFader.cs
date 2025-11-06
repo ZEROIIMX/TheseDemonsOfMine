@@ -21,6 +21,8 @@ public class ObstructionFader : MonoBehaviour
 
     void Update()
     {
+        if (player == null) return;
+
         // 🧹 Clean up destroyed or invalid objects
         List<Renderer> cleanupList = new();
         foreach (var kvp in fadedObjects)

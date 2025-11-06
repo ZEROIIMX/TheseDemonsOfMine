@@ -13,7 +13,7 @@ public class SlimeTarget : MonoBehaviour
     private Animator m_animator;
     private Slime slime;
     private bool isChasing = false;
-    private bool Activated = false;
+    private bool activated = false;
 
     [SerializeField] private float grabCooldown = 3f;
     private bool grab = true;
@@ -37,16 +37,10 @@ public class SlimeTarget : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, Target.position);
 
-        if (!Activated)
+        if (!activated)
         {
-            if (distance > ActivationDistance)
-            {
-                return;
-            }
-            else
-            {
-                Activated = true;
-            }
+            if (distance > ActivationDistance) return;
+            activated = true;
         }
 
         if (slime.IsBusy())
@@ -54,7 +48,7 @@ public class SlimeTarget : MonoBehaviour
             if (isChasing)
             {
                 isChasing = false;
-                Activated = false;
+                activated = false;
                 m_animator.SetBool("Walk", false);
             }
             return;
@@ -69,7 +63,11 @@ public class SlimeTarget : MonoBehaviour
                 m_animator.SetBool("Walk", false);
                 m_animator.SetTrigger("Grab");
                 grab = false;
-                GrabCooldown();
+
+                if (grabCooldownRoutine == null)
+                {
+                    grabCooldownRoutine = StartCoroutine(GrabCooldown());
+                }
             }
             agent.isStopped = true;
         }
@@ -85,6 +83,7 @@ public class SlimeTarget : MonoBehaviour
             agent.destination = Target.position;
         }
     }
+
     private IEnumerator GrabCooldown()
     {
         yield return new WaitForSeconds(grabCooldown);
