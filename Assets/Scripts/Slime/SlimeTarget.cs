@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +14,10 @@ public class SlimeTarget : MonoBehaviour
     private Slime slime;
     private bool isChasing = false;
     private bool Activated = false;
+
+    [SerializeField] private float grabCooldown = 3f;
+    private bool grab = true;
+    private Coroutine grabCooldownRoutine;
 
     void Start()
     {
@@ -55,13 +60,16 @@ public class SlimeTarget : MonoBehaviour
             return;
         }
 
-        if (distance <= AttackDistance)
+        if (distance <= AttackDistance && grab)
         {
             if (isChasing)
             {
                 isChasing = false;
                 slime.SetChaseState(false);
                 m_animator.SetBool("Walk", false);
+                m_animator.SetTrigger("Grab");
+                grab = false;
+                GrabCooldown();
             }
             agent.isStopped = true;
         }
@@ -76,5 +84,11 @@ public class SlimeTarget : MonoBehaviour
             agent.isStopped = false;
             agent.destination = Target.position;
         }
+    }
+    private IEnumerator GrabCooldown()
+    {
+        yield return new WaitForSeconds(grabCooldown);
+        grabCooldownRoutine = null;
+        grab = true;
     }
 }

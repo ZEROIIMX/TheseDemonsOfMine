@@ -12,7 +12,6 @@ public class Slime : MonoBehaviour
     [SerializeField] public float HealthUpgrade2;
 
     [Header("Grab Mechanic")]
-    [SerializeField] private float grabCooldown = 5f;
     [SerializeField] private float damagePerTick = 5f;
     [SerializeField] private float damageInterval = 0.5f;
 
@@ -62,18 +61,15 @@ public class Slime : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void Grab(PlayerController player)
     {
-        if (other.CompareTag("Player") && !isStruggling && !isDead)
+        if (!isStruggling && !isDead)
         {
-            if (other.TryGetComponent<PlayerController>(out var playerMovement))
-            {
-                StartCoroutine(StruggleSequence(playerMovement));
-            }
+            StartCoroutine(StruggleSequence(player));
         }
     }
 
-    private IEnumerator StruggleSequence(PlayerController playerMovement)
+    public IEnumerator StruggleSequence(PlayerController playerMovement)
     {
         if (playerMovement == null) yield break;
 
@@ -81,12 +77,6 @@ public class Slime : MonoBehaviour
         HandleStruggleStart(playerMovement);
         yield return StartCoroutine(StruggleLoop(playerMovement));
         HandleStruggleEnd(playerMovement);
-
-        if (!isDead)
-        {
-            yield return new WaitForSeconds(grabCooldown);
-        }
-        isStruggling = false;
     }
 
     private void HandleStruggleStart(PlayerController playerMovement)

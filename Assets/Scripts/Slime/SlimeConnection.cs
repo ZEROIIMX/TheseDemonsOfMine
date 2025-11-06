@@ -4,10 +4,13 @@ public class SlimeConnection : MonoBehaviour
 {
     private Slime slime;
 
+    private GrabCollision GrabCollision;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         slime = GetComponentInParent<Slime>();
+        GrabCollision = GetComponentInChildren<GrabCollision>();
     }
 
     // Update is called once per frame
@@ -19,5 +22,20 @@ public class SlimeConnection : MonoBehaviour
     public void SlimeDie()
     {
         slime?.Death();
+    }
+
+    public void GrabOn()
+    {
+        GrabCollision.ActivateGrab();
+    }
+
+    public void GrabOff() 
+    { 
+        GrabCollision.DeactivateGrab(); 
+    }
+
+    public void SuccesfulGrab(PlayerController player)
+    {
+        slime?.Grab(player);
     }
 }
