@@ -83,6 +83,8 @@ public class Slime : MonoBehaviour
 
     private IEnumerator StruggleSequence(PlayerController playerMovement)
     {
+        if (playerMovement == null) yield break;
+
         isStruggling = true;
         HandleStruggleStart(playerMovement);
         yield return StartCoroutine(StruggleLoop(playerMovement));
@@ -113,6 +115,8 @@ public class Slime : MonoBehaviour
 
         while (struggleTimer < struggleDuration)
         {
+            if (playerMovement == null) yield break;
+
             playerMovement.transform.position = transform.position;
             damageTickTimer += Time.deltaTime;
             if (damageTickTimer >= damageInterval)
@@ -129,6 +133,8 @@ public class Slime : MonoBehaviour
 
     private void HandleStruggleEnd(PlayerController playerMovement)
     {
+        if (playerMovement == null) return;
+
         if (m_animator != null) m_animator.SetBool("IsGrabbing", false);
         playerMovement.enabled = true;
         if (slimeTarget != null) slimeTarget.enabled = true;

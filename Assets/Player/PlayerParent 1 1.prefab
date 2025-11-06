@@ -313,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6.5
   jumpHeight: 3
-  gravity: -9.81
+  gravity: -15
   jumpResetDelay: 0.1
   dashSpeed: 40
   dashDuration: 0.1
