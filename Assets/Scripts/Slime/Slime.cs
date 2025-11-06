@@ -29,27 +29,18 @@ public class Slime : MonoBehaviour
     private float initialHealth;
     private Coroutine scalingCoroutine;
 
-    private Animator animator;
-
-    public Collider slimeCollider;
-
     private void Start()
     {
         slimeTarget = GetComponent<SlimeTarget>();
-        m_animator = GetComponent<Animator>();
+        m_animator = GetComponentInChildren<Animator>();
         initialScale = transform.localScale;
         initialMaxHealth = MaxHealth;
         initialHealth = Health;
-        animator = GetComponentInChildren<Animator>();
-        slimeCollider = GetComponent<Collider>();
     }
 
     private void Update()
     {
-        if (Health <= 0 && !isDead)
-        {
-            m_animator.SetTrigger("Die");
-        }
+
     }
 
     public bool IsBusy()
@@ -108,7 +99,6 @@ public class Slime : MonoBehaviour
 
         playerMovement.enabled = false;
         if (slimeTarget != null) slimeTarget.enabled = false;
-        if (m_animator != null) m_animator.SetBool("IsGrabbing", true);
     }
 
     private IEnumerator StruggleLoop(PlayerController playerMovement)
@@ -135,16 +125,10 @@ public class Slime : MonoBehaviour
     {
         if (playerMovement == null) return;
 
-        if (m_animator != null) m_animator.SetBool("IsGrabbing", false);
         playerMovement.enabled = true;
         if (slimeTarget != null) slimeTarget.enabled = true;
 
         if (scalingCoroutine != null) StopCoroutine(scalingCoroutine);
-    }
-
-    public void Die()
-    {
-        Destroy(gameObject);
     }
 
     private IEnumerator ScaleOverTime(Vector3 targetScale, float duration)
@@ -181,9 +165,17 @@ public class Slime : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        Debug.Log($"Slime took {damageAmount} damage.");
         Health -= damageAmount;
-        if (Health <= 0) Die();
+
+        if (Health <= 0)
+        {
+            m_animator.SetTrigger("Death");
+        }
     }
 
+    public void Death()
+    {
+        
+        Destroy(gameObject);
+    }
 }

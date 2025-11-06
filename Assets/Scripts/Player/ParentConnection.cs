@@ -59,7 +59,7 @@ public class ParentConnection : MonoBehaviour
     swordHitbox?.S1Hitbox(); 
     }
 
-    public void S1HBend()
+    public void S1HBEnd()
     {
         swordHitbox?.S1HitboxEnd();
     }

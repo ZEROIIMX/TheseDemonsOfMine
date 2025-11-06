@@ -19,14 +19,14 @@ public class SwordHitbox : MonoBehaviour
 
     void Start()
     {
-        hitbox = GetComponentInChildren<Collider>();
+        hitbox = GetComponent<Collider>();
         hitbox.enabled = true;
         sword = GetComponentInParent<Sword>();
     }
 
-    void OnTriggerEnter(Collider Collision)
+    void OnTriggerEnter(Collider collision)
     {
-        if (((1 << Collision.gameObject.layer) & targetLayer) != 0)
+        if (((1 << collision.gameObject.layer) & targetLayer) != 0)
         {
             if (parry)
             {
@@ -46,13 +46,11 @@ public class SwordHitbox : MonoBehaviour
                 damageAmount = 100;
             }
 
-            SlimeHitbox hitbox = Collision.GetComponent<SlimeHitbox>();
-            if (hitbox != null && hitbox.slime != null)
-            {
-                hitbox.TakeDamage(damageAmount);
-            }
+            Slime slimeHealth = collision.gameObject.GetComponent<Slime>();
+            if (slimeHealth != null) slimeHealth.TakeDamage(damageAmount);
         }
     }
+
 
     public void ParryHitbox()
     {
