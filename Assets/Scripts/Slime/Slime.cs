@@ -140,10 +140,6 @@ public class Slime : MonoBehaviour
         if (slimeTarget != null) slimeTarget.enabled = true;
 
         if (scalingCoroutine != null) StopCoroutine(scalingCoroutine);
-        scalingCoroutine = StartCoroutine(ScaleOverTime(initialScale, scaleDuration));
-
-        MaxHealth = initialMaxHealth;
-        Health = initialHealth;
     }
 
     private IEnumerator ScaleOverTime(Vector3 targetScale, float duration)

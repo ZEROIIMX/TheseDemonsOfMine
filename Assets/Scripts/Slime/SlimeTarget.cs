@@ -12,6 +12,7 @@ public class SlimeTarget : MonoBehaviour
     private Animator animator;
     private Slime slime;
     private bool isChasing = false;
+    private bool Activated = false;
 
     void Start()
     {
@@ -31,15 +32,18 @@ public class SlimeTarget : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, Target.position);
 
-        if (distance > ActivationDistance)
+        if (!Activated)
         {
-            if (isChasing)
+            if (distance > ActivationDistance)
             {
-                isChasing = false;
-                slime.SetChaseState(false);
+                // Still outside activation range — do nothing
+                return;
             }
-            agent.isStopped = true;
-            return;
+            else
+            {
+                // Player entered activation range — activate slime
+                Activated = true;
+            }
         }
 
         if (slime.IsBusy())
@@ -47,6 +51,7 @@ public class SlimeTarget : MonoBehaviour
             if (isChasing)
             {
                 isChasing = false;
+                Activated = false;
             }
             return;
         }
@@ -57,6 +62,7 @@ public class SlimeTarget : MonoBehaviour
             {
                 isChasing = false;
                 slime.SetChaseState(false);
+                Activated = false;
             }
             agent.isStopped = true;
         }
