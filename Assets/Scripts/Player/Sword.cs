@@ -333,7 +333,7 @@ public class Sword : MonoBehaviour
     {
         if (isParryTimeActive) return;
         isParryTimeActive = true;
-        parryTimeRoutine = StartCoroutine(SlowWorldExceptPlayer(0.1f, 10f));
+        parryTimeRoutine = StartCoroutine(SlowWorldExceptPlayer(0.1f, 5f));
         Debug.Log("Parry Time Activated");
     }
 
