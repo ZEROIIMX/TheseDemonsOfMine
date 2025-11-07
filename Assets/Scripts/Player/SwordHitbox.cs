@@ -15,6 +15,7 @@ public class SwordHitbox : MonoBehaviour
     private bool s3 = false;
 
     private int damageAmount;
+    public float slashForce = 10f;
 
     void Start()
     {
@@ -38,7 +39,11 @@ public class SwordHitbox : MonoBehaviour
         else if (s2) damageAmount = 75;
         else if (s3) damageAmount = 100;
 
+        var hitDirection = (collision.transform.position - playerController.transform.position).normalized; 
         slimeHealth.TakeDamage(damageAmount);
+
+        slimeHealth.rb.AddForce(hitDirection * slashForce /*+ Vector3.up * slashForce / 2*/, ForceMode.Impulse);
+        slimeHealth.TakeForce();
     }
 
     // Parry

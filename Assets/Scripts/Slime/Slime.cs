@@ -192,6 +192,15 @@ public class Slime : MonoBehaviour
         }
     }
 
+    public void TakeForce()
+    {
+        StartCoroutine(DelayedResetVelocity());
+    }
+    IEnumerator DelayedResetVelocity()
+    {
+        yield return new WaitForSeconds(0.5f);
+        rb.linearVelocity = Vector3.zero;
+    }
     public void Death()
     {
         if (sword != null)
