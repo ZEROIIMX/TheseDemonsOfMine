@@ -19,8 +19,8 @@ public class Slime : MonoBehaviour
     [SerializeField] private float maxScaleMultiplier = 1.5f;
     [SerializeField] private float scaleDuration = 3.0f;
 
-    private bool isStruggling = false;
-    private bool isDead = false;
+    public bool isStruggling = false;
+    public bool isDead = false;
     private SlimeTarget slimeTarget;
     private Animator m_animator;
     private Vector3 initialScale;
@@ -28,6 +28,13 @@ public class Slime : MonoBehaviour
     private float initialHealth;
     private Coroutine scalingCoroutine;
     public Rigidbody rb;
+
+    private Sword sword;
+
+    private Collider slimeCollider;
+    private Collider playerCollider;
+
+
 
     private void Start()
     {
@@ -37,6 +44,8 @@ public class Slime : MonoBehaviour
         initialScale = transform.localScale;
         initialMaxHealth = MaxHealth;
         initialHealth = Health;
+        slimeCollider = GetComponent<Collider>();
+
     }
 
     private void Update()
@@ -67,6 +76,12 @@ public class Slime : MonoBehaviour
     {
         if (!isStruggling && !isDead)
         {
+            sword = player.GetComponentInChildren<Sword>();
+            if (sword != null)
+            {
+                sword?.Held();
+            }
+            playerCollider = player.GetComponent<Collider>();
             StartCoroutine(StruggleSequence(player));
         }
     }
@@ -83,14 +98,16 @@ public class Slime : MonoBehaviour
 
     private void HandleStruggleStart(PlayerController playerMovement)
     {
-        if (scalingCoroutine != null)
-        {
-            StopCoroutine(scalingCoroutine);
-            scalingCoroutine = null;
-        }
+        slimeTarget.hasGrabbed = true;
 
         playerMovement.enabled = false;
         if (slimeTarget != null) slimeTarget.enabled = false;
+
+        if (slimeCollider != null && playerCollider != null)
+        {
+            Physics.IgnoreCollision(slimeCollider, playerCollider, true);
+        }
+
     }
 
     private IEnumerator StruggleLoop(PlayerController playerMovement)
@@ -162,13 +179,18 @@ public class Slime : MonoBehaviour
 
         if (Health <= 0)
         {
+            isDead = true;
             m_animator.SetTrigger("Death");
         }
     }
 
     public void Death()
     {
-        
+        if (sword != null)
+        {
+        sword?.NotHeld();
+        }
+
         Destroy(gameObject);
     }
 }

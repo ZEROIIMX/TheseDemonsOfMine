@@ -46,6 +46,8 @@ public class Sword : MonoBehaviour
 
     private bool isParrying = false;
 
+    public bool isHeld = false;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -296,5 +298,17 @@ public class Sword : MonoBehaviour
     public bool IsParrying()
     {
         return isParrying;
+    }
+
+    public void Held()
+    {
+        isHeld = true;
+        SwordHitbox.canPush = false;
+    }
+
+    public void NotHeld()
+    {
+        isHeld = false;
+        SwordHitbox.canPush = true;
     }
 }

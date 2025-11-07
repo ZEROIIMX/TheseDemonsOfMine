@@ -18,6 +18,8 @@ public class SlimeTarget : MonoBehaviour
     [SerializeField] private float grabCooldown = 3f;
     private bool grab = true;
     private Coroutine grabCooldownRoutine;
+    public bool hasGrabbed = false;
+
 
     void Start()
     {
@@ -73,7 +75,7 @@ public class SlimeTarget : MonoBehaviour
         }
         else
         {
-            if (!isChasing)
+            if (!isChasing && !slime.isStruggling && !slime.isDead && !hasGrabbed)
             {
                 isChasing = true;
                 slime.SetChaseState(true);

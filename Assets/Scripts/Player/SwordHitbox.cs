@@ -19,7 +19,11 @@ public class SwordHitbox : MonoBehaviour
     private int damageAmount;
 
     private PlayerController playerController;
+
     [SerializeField] private float pushForce;
+
+    public bool canPush = true;
+
     void Start()
     {
         playerController = GetComponentInParent<PlayerController>();
@@ -29,6 +33,14 @@ public class SwordHitbox : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collision)
+    {
+        
+        {
+            
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
     {
         if (((1 << collision.gameObject.layer) & targetLayer) != 0)
         {
@@ -51,19 +63,20 @@ public class SwordHitbox : MonoBehaviour
 
             Slime slimeHealth = collision.gameObject.GetComponent<Slime>();
             if (slimeHealth != null) slimeHealth.TakeDamage(damageAmount);
-        }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            var enemy = collision.gameObject.GetComponent<Slime>();
-            var direction = (collision.transform.position - playerController.transform.position).normalized;
-            enemy.rb.AddForce(direction * pushForce,ForceMode.Impulse);
-            StartCoroutine(DelayedStopEnemyRigidbody(enemy.rb));
-            //----> spawn a particle on this position you idiot hilario    collision.contacts[0].point;
-
+            if (canPush)
+            {
+                Debug.Log("Pushing enemy!");
+                var enemy = collision.gameObject.GetComponent<Slime>();
+                var direction = (collision.transform.position - playerController.transform.position).normalized;
+                enemy.rb.AddForce(direction * pushForce, ForceMode.Impulse);
+                StartCoroutine(DelayedStopEnemyRigidbody(enemy.rb));
+                //----> spawn a particle on this position you idiot hilario    collision.contacts[0].point;
+            }
+            else
+            {
+                Debug.Log("Push disabled.");
+            }
         }
     }
     IEnumerator DelayedStopEnemyRigidbody(Rigidbody rb)
