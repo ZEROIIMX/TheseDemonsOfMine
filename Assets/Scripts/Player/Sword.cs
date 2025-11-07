@@ -48,6 +48,8 @@ public class Sword : MonoBehaviour
 
     public bool isHeld = false;
 
+    public bool isGrounded = false;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -63,7 +65,7 @@ public class Sword : MonoBehaviour
     void Update()
     {
         // Continuous parry check
-        if (isParryHeld && parry)
+        if (isParryHeld && parry && !isHeld && isGrounded)
         {
             if (!equipped)
             {
@@ -110,7 +112,19 @@ public class Sword : MonoBehaviour
     {
         if (!context.started || attackOnCooldown || childAnimator == null) return;
 
-        if (!equipped && !slash2 && !slash3)
+        if (!equipped && isHeld)
+        {
+            childAnimator.SetTrigger("HeldDraw");
+            attackOnCooldown = true;
+            RestartAttackCooldown();
+        }
+        else if (isHeld)
+        {
+            childAnimator.SetTrigger("HeldAttack");
+            attackOnCooldown = true;
+            RestartAttackCooldown();
+        }
+        else if (!equipped && !slash2 && !slash3)
         {
             childAnimator.SetTrigger("Draw");
             attackOnCooldown = true;
@@ -199,12 +213,12 @@ public class Sword : MonoBehaviour
         slash2 = true;
         attackOnCooldown = false;
         StartCoroutine(ResetSlash2());
-        Debug.Log("S2 available for 0.3");
+        Debug.Log("S2 available for 0.25");
     }
 
     private IEnumerator ResetSlash2()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.25f);
         Debug.Log("S2 end");
         slash2 = false;
         attackOnCooldown = true;
@@ -217,13 +231,13 @@ public class Sword : MonoBehaviour
         slash3 = true;
         attackOnCooldown = false;
         StartCoroutine(ResetSlash3());
-        Debug.Log("S3 available for 0.3");
+        Debug.Log("S3 available for 0.25");
         s2 = false;
     }
 
     private IEnumerator ResetSlash3()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.25f);
         Debug.Log("S3 end");
         slash3 = false;
         attackOnCooldown = true;

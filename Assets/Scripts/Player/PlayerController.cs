@@ -139,10 +139,12 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             hasWallJumped = false;
             wallJump = false;
+            sword.isGrounded = true;
         }
         else
         {
             velocity.y += gravity * Time.deltaTime;
+            sword.isGrounded = false;
         }
 
         // Combine movement
