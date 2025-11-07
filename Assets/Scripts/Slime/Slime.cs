@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.GraphicsBuffer;
@@ -82,6 +82,9 @@ public class Slime : MonoBehaviour
                 sword?.Held();
             }
             playerCollider = player.GetComponent<Collider>();
+
+            slimeTarget.hasGrabbed = true;
+
             StartCoroutine(StruggleSequence(player));
         }
     }
@@ -107,7 +110,11 @@ public class Slime : MonoBehaviour
         {
             Physics.IgnoreCollision(slimeCollider, playerCollider, true);
         }
-
+        if (m_animator != null)
+        {
+            m_animator.SetBool("Walk", false);
+            m_animator.SetTrigger("OnGrab");
+        }
     }
 
     private IEnumerator StruggleLoop(PlayerController playerMovement)
