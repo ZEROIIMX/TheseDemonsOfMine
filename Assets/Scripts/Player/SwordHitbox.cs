@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class SwordHitbox : MonoBehaviour
 {
@@ -23,30 +23,38 @@ public class SwordHitbox : MonoBehaviour
         sword = GetComponentInParent<Sword>();
         hitbox = GetComponent<Collider>();
         hitbox.enabled = false;
-        // Removed trigger mode — using standard collision
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (((1 << collision.gameObject.layer) & targetLayer) == 0) return;
 
-        Slime slimeHealth = collision.gameObject.GetComponent<Slime>();
-        if (slimeHealth == null) return;
-
-        // Determine damage
         if (parry) damageAmount = 0;
         else if (s1) damageAmount = 50;
         else if (s2) damageAmount = 75;
         else if (s3) damageAmount = 100;
 
-        var hitDirection = (collision.transform.position - playerController.transform.position).normalized; 
-        slimeHealth.TakeDamage(damageAmount);
+        var hitDirection = (collision.transform.position - playerController.transform.position).normalized;
 
-        slimeHealth.rb.AddForce(hitDirection * slashForce /*+ Vector3.up * slashForce / 2*/, ForceMode.Impulse);
-        slimeHealth.TakeForce();
+        Slime slimeHealth = collision.gameObject.GetComponent<Slime>();
+        if (slimeHealth != null)
+        {
+            slimeHealth.TakeDamage(damageAmount);
+            if (slimeHealth.rb != null)
+            {
+                slimeHealth.rb.AddForce(hitDirection * slashForce, ForceMode.Impulse);
+                slimeHealth.TakeForce();
+            }
+            return;
+        }
+
+        MultiplyEnemy multiplyEnemy = collision.gameObject.GetComponent<MultiplyEnemy>();
+        if (multiplyEnemy != null)
+        {
+            multiplyEnemy.TakeDamage(damageAmount, hitDirection, slashForce);
+        }
     }
 
-    // Parry
     public void ParryHitbox()
     {
         parry = true;
@@ -59,7 +67,6 @@ public class SwordHitbox : MonoBehaviour
         hitbox.enabled = false;
     }
 
-    // Slash 1
     public void S1Hitbox()
     {
         s1 = true;
@@ -72,7 +79,6 @@ public class SwordHitbox : MonoBehaviour
         hitbox.enabled = false;
     }
 
-    // Slash 2
     public void S2Hitbox()
     {
         s2 = true;
@@ -85,7 +91,6 @@ public class SwordHitbox : MonoBehaviour
         hitbox.enabled = false;
     }
 
-    // Slash 3
     public void S3Hitbox()
     {
         s3 = true;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[DefaultExecutionOrder(0)]
+[DefaultExecutionOrder(-100)]
 public class AIManager : MonoBehaviour
 {
     private static AIManager _instance;
