@@ -41,12 +41,20 @@ public class PlayerController : MonoBehaviour
 
     private Sword sword;
 
-    // Input buffering
     private bool isJumpHeld = false;
-
     private bool isDashHeld = false;
-
     private bool isMoveHeld = false;
+
+    private bool useUnscaledTime = false;
+
+    public void UseUnscaledTime(bool value)
+    {
+        useUnscaledTime = value;
+        if (animator != null)
+        {
+            animator.updateMode = value ? AnimatorUpdateMode.UnscaledTime : AnimatorUpdateMode.Normal;
+        }
+    }
 
     void Start()
     {
@@ -57,6 +65,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        float delta = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+
         if (isMoveHeld)
         {
             if (bufferedMoveInput != Vector3.zero)
@@ -76,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
         if (isDashHeld && canDash && !isDashing && latestMoveInput != Vector3.zero)
         {
-            StartCoroutine(Dash());
+            StartCoroutine(Dash(delta));
             animator?.SetBool("Dash", true);
         }
 
@@ -104,35 +114,13 @@ public class PlayerController : MonoBehaviour
         {
             moveInput = Vector3.zero;
         }
-        else
-        {
-            if (isMoveHeld)
-            {
-                if (bufferedMoveInput != Vector3.zero)
-                {
-                    moveInput = bufferedMoveInput;
-                    bufferedMoveInput = Vector3.zero;
-                }
-                else if (latestMoveInput != Vector3.zero)
-                {
-                    moveInput = latestMoveInput;
-                }
-            }
-            else
-            {
-                moveInput = Vector3.zero;
-            }
-        }
 
-
-        // Handle rotation
         if (!isDashing && !isRootMotionActive && moveInput != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveInput);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, delta * 10f);
         }
 
-        // Gravity and grounded check
         if (controller.isGrounded && !isJumping)
         {
             velocity.y = -2f;
@@ -143,30 +131,27 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * delta;
             sword.isGrounded = false;
         }
 
-        // Combine movement
         if (!isDashing && !isRootMotionActive)
         {
             Vector3 move = moveInput * moveSpeed;
             move.y = velocity.y;
-            controller.Move(move * Time.deltaTime);
+            controller.Move(move * delta);
         }
         else if (!isDashing && isRootMotionActive)
         {
-            controller.Move(new Vector3(0, velocity.y, 0) * Time.deltaTime);
+            controller.Move(new Vector3(0, velocity.y, 0) * delta);
         }
 
-        // Animator updates
         if (animator != null)
         {
             animator.SetBool("Run", !S2 && moveInput != Vector3.zero);
             animator.SetBool("IsGrounded", isDashing ? true : controller.isGrounded);
         }
     }
-
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -202,7 +187,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -236,7 +220,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator Dash()
+    private IEnumerator Dash(float delta)
     {
         isDashing = true;
         canDash = false;
@@ -250,8 +234,8 @@ public class PlayerController : MonoBehaviour
 
         while (timer < currentDashDuration)
         {
-            controller.Move(dashDirection * currentDashSpeed * Time.deltaTime);
-            timer += Time.deltaTime;
+            controller.Move(dashDirection * currentDashSpeed * delta);
+            timer += delta;
             yield return null;
         }
 
@@ -305,6 +289,7 @@ public class PlayerController : MonoBehaviour
         moveSpeed = 6.5f;
         S2 = false;
     }
+
     public bool IsDashing()
     {
         return isDashing;

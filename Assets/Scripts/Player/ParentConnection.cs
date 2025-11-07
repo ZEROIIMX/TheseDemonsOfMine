@@ -51,7 +51,7 @@ public class ParentConnection : MonoBehaviour
 
     public void PEND()
     {
-    sword?.FinishParry();
+        sword?.FinishParry();
     }
 
     public void S1HB()

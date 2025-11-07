@@ -55,13 +55,6 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.8532609
-        functionName: S2
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.34574467
         functionName: S1HB
         data: 
@@ -894,8 +887,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 77a500523ba5ea74c84b0c49e3ae0941,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 77a500523ba5ea74c84b0c49e3ae0941, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1

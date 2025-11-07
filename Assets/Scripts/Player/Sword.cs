@@ -25,15 +25,19 @@ public class Sword : MonoBehaviour
     private bool s3 = false;
     private bool parry = true;
     private bool isParryHeld = false;
+    private bool isParryTimeActive = false;
 
     private Coroutine attackCooldownRoutine;
     private Coroutine saveCooldownRoutine;
     private Coroutine parryCooldownRoutine;
+    private Coroutine parryTimeRoutine;
+
 
     // Components
     private SwordHitbox SwordHitbox;
     private CharacterController controller;
     private PlayerController playerController;
+    private ParentConnection parentConnection;
 
     // Root motion cache
     private Vector3 rootMotionDeltaPosition = Vector3.zero;
@@ -44,10 +48,8 @@ public class Sword : MonoBehaviour
     public float saveCd;
     public float parryCd;
 
-    private bool isParrying = false;
-
+    public bool isParrying = false;
     public bool isHeld = false;
-
     public bool isGrounded = false;
 
     void Start()
@@ -55,6 +57,7 @@ public class Sword : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         SwordHitbox = GetComponentInChildren<SwordHitbox>();
         controller = GetComponent<CharacterController>();
+        parentConnection = GetComponentInChildren<ParentConnection>();
 
         if (childAnimator == null)
             childAnimator = GetComponentInChildren<Animator>();
@@ -64,14 +67,16 @@ public class Sword : MonoBehaviour
 
     void Update()
     {
-        // Continuous parry check
         if (isParryHeld && parry && !isHeld && isGrounded)
         {
             if (!equipped)
             {
                 childAnimator.SetTrigger("Parry");
             }
-            Parry();
+            else
+            {
+                parentConnection?.P();
+            }
         }
     }
 
@@ -79,7 +84,6 @@ public class Sword : MonoBehaviour
     {
         if (!applyRootMotionThisFrame || controller == null || playerController == null) return;
 
-        // Only apply root motion if not dashing
         if (!playerController.IsDashing())
         {
             controller.Move(rootMotionDeltaPosition);
@@ -87,7 +91,6 @@ public class Sword : MonoBehaviour
         }
         else
         {
-            // Apply vertical root motion only (e.g., gravity)
             controller.Move(new Vector3(0, rootMotionDeltaPosition.y, 0));
         }
 
@@ -159,7 +162,7 @@ public class Sword : MonoBehaviour
     private IEnumerator AttackCooldown()
     {
         attackOnCooldown = true;
-        yield return new WaitForSeconds(attackCd);
+        yield return new WaitForSecondsRealtime(attackCd);
         attackOnCooldown = false;
         attackCooldownRoutine = null;
     }
@@ -178,7 +181,7 @@ public class Sword : MonoBehaviour
 
     private IEnumerator SaveCooldown()
     {
-        yield return new WaitForSeconds(saveCd);
+        yield return new WaitForSecondsRealtime(saveCd);
         childAnimator.SetTrigger("Save");
         saveCooldownRoutine = null;
     }
@@ -218,7 +221,7 @@ public class Sword : MonoBehaviour
 
     private IEnumerator ResetSlash2()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSecondsRealtime(0.25f);
         Debug.Log("S2 end");
         slash2 = false;
         attackOnCooldown = true;
@@ -237,7 +240,7 @@ public class Sword : MonoBehaviour
 
     private IEnumerator ResetSlash3()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSecondsRealtime(0.25f);
         Debug.Log("S3 end");
         slash3 = false;
         attackOnCooldown = true;
@@ -261,7 +264,7 @@ public class Sword : MonoBehaviour
     public void Parry()
     {
         parry = false;
-        isParrying = true; // ✅ Movement lock
+        isParrying = true;
         childAnimator.SetTrigger("Parry2");
         playerController?.Parrying();
         RestartParryCooldown();
@@ -282,6 +285,7 @@ public class Sword : MonoBehaviour
         }
     }
 
+
     public void FinishParry()
     {
         isParrying = false;
@@ -296,7 +300,7 @@ public class Sword : MonoBehaviour
 
     private IEnumerator ParryCooldown()
     {
-        yield return new WaitForSeconds(parryCd);
+        yield return new WaitForSecondsRealtime(parryCd);
         parryCooldownRoutine = null;
         parry = true;
     }
@@ -309,6 +313,7 @@ public class Sword : MonoBehaviour
         }
         parryCooldownRoutine = StartCoroutine(ParryCooldown());
     }
+
     public bool IsParrying()
     {
         return isParrying;
@@ -317,12 +322,54 @@ public class Sword : MonoBehaviour
     public void Held()
     {
         isHeld = true;
-        SwordHitbox.canPush = false;
     }
 
     public void NotHeld()
     {
         isHeld = false;
-        SwordHitbox.canPush = true;
+    }
+
+    public void ParryTime()
+    {
+        if (isParryTimeActive) return;
+        isParryTimeActive = true;
+        parryTimeRoutine = StartCoroutine(SlowWorldExceptPlayer(0.1f, 10f));
+        Debug.Log("Parry Time Activated");
+    }
+
+    private IEnumerator SlowWorldExceptPlayer(float slowFactor, float duration)
+    {
+        isParryTimeActive = true;
+
+        Time.timeScale = slowFactor;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        childAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        playerController.UseUnscaledTime(true);
+
+        yield return new WaitForSecondsRealtime(duration);
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        childAnimator.updateMode = AnimatorUpdateMode.Normal;
+        playerController.UseUnscaledTime(false);
+
+        isParryTimeActive = false; // Unlock after cooldown
+
+    }
+    public void CancelParryTime()
+    {
+        if (parryTimeRoutine != null)
+        {
+            StopCoroutine(parryTimeRoutine);
+            parryTimeRoutine = null;
+        }
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+        childAnimator.updateMode = AnimatorUpdateMode.Normal;
+        playerController.UseUnscaledTime(false);
+        isParryTimeActive = false;
     }
 }

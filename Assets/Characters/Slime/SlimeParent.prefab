@@ -80,7 +80,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1352290475005112439}
-  - component: {fileID: 783898387753757505}
   - component: {fileID: 4012538748943747436}
   - component: {fileID: 7025710496764825233}
   - component: {fileID: 6534908157413263691}
@@ -108,33 +107,6 @@ Transform:
   - {fileID: 5233928300739108739}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!54 &783898387753757505
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6565213589557057850}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 256
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!195 &4012538748943747436
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -177,6 +149,9 @@ MonoBehaviour:
   damageInterval: 0.5
   maxScaleMultiplier: 2.5
   scaleDuration: 3
+  isStruggling: 0
+  isDead: 0
+  rb: {fileID: 0}
 --- !u!114 &6534908157413263691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +168,7 @@ MonoBehaviour:
   AttackDistance: 2
   ActivationDistance: 7
   grabCooldown: 3
+  hasGrabbed: 0
 --- !u!136 &8419213489800776437
 CapsuleCollider:
   m_ObjectHideFlags: 0

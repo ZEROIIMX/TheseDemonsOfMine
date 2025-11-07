@@ -3,41 +3,52 @@ using UnityEngine;
 
 public class GrabCollision : MonoBehaviour
 {
-    private Collider grabCollider;
-
+    public Collider grabLCollider;
+    public Collider grabRCollider;
     private SlimeConnection slimeConnection;
 
     public LayerMask targetLayer;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        grabCollider = GetComponent<Collider>();
-        grabCollider.enabled = false;
+        grabLCollider.enabled = false;
+        grabRCollider.enabled = false;
+
+        grabLCollider.isTrigger = true;
+        grabRCollider.isTrigger = true;
+
         slimeConnection = GetComponentInParent<SlimeConnection>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-    void OnTriggerEnter(Collider collision)
-    {
-        PlayerController player = collision.GetComponent<PlayerController>();
+        if (((1 << other.gameObject.layer) & targetLayer) == 0) return;
+
+        PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {
-            slimeConnection?.SuccesfulGrab(player);
+            Sword sword = player.GetComponent<Sword>();
+            if (sword != null && sword.isParrying)
+            {
+                sword.ParryTime();
+                DeactivateGrab();
+            }
+            else
+            {
+                slimeConnection?.SuccesfulGrab(player);
+            }
         }
     }
 
     public void ActivateGrab()
     {
-        grabCollider.enabled = true;
+        grabLCollider.enabled = true;
+        grabRCollider.enabled = true;
     }
 
     public void DeactivateGrab()
     {
-        grabCollider.enabled = false;
+        grabLCollider.enabled = false;
+        grabRCollider.enabled = false;
     }
 }
