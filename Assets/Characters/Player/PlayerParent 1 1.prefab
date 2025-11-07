@@ -294,7 +294,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.89
-  m_Radius: 0.22
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -348,6 +348,9 @@ MonoBehaviour:
   attackCd: 0.5
   saveCd: 5
   parryCd: 3
+  isParrying: 0
+  isHeld: 0
+  isGrounded: 0
 --- !u!114 &3027433840155980550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,7 +391,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &7125377073420936351
 GameObject:
@@ -505,6 +508,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 254bcab2110304743bf5e5f03dfed434, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8859644017176223034}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 254bcab2110304743bf5e5f03dfed434, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6550188453029148017}
   m_SourcePrefab: {fileID: 100100000, guid: 254bcab2110304743bf5e5f03dfed434, type: 3}
 --- !u!4 &2820458296085133556 stripped
 Transform:
@@ -546,12 +552,39 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 8
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.07, y: 0.17, z: 0.94}
   m_Center: {x: 0.000000036351178, y: 0.03, z: 0.6}
+--- !u!54 &6550188453029148017
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3201944216569995854}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &3556701304722488563
 PrefabInstance:
   m_ObjectHideFlags: 0
