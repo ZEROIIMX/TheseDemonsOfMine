@@ -196,8 +196,8 @@ GameObject:
   - component: {fileID: 4012538748943747436}
   - component: {fileID: 7025710496764825233}
   - component: {fileID: 6534908157413263691}
-  - component: {fileID: 8419213489800776437}
   - component: {fileID: 7419403480340366833}
+  - component: {fileID: 5131225743583501911}
   m_Layer: 8
   m_Name: SlimeParent
   m_TagString: Enemy
@@ -231,7 +231,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.48
-  m_Speed: 4.5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -262,7 +262,7 @@ MonoBehaviour:
   damagePerTick: 5
   damageInterval: 0.5
   maxScaleMultiplier: 2.5
-  scaleDuration: 3
+  scaleDuration: 1.5
   isStruggling: 0
   isDead: 0
   rb: {fileID: 0}
@@ -279,33 +279,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  AttackDistance: 3.5
-  ActivationDistance: 7
+  AttackDistance: 4
+  ActivationDistance: 9
   grabCooldown: 3
   hasGrabbed: 0
---- !u!136 &8419213489800776437
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6565213589557057850}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 256
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Height: 1.63
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.52, z: 0}
 --- !u!54 &7419403480340366833
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -325,7 +302,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -333,6 +310,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &5131225743583501911
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6565213589557057850}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.58, y: 1.4151978, z: 0.85245514}
+  m_Center: {x: 0, y: 0.67259896, z: -0.09853363}
 --- !u!1001 &2197383181108572846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -343,15 +341,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: bca7b7f5c81a7d44fab387731788017e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.3
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bca7b7f5c81a7d44fab387731788017e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.3
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bca7b7f5c81a7d44fab387731788017e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.3
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bca7b7f5c81a7d44fab387731788017e, type: 3}
       propertyPath: m_LocalPosition.x
