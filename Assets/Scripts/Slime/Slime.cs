@@ -16,8 +16,8 @@ public class Slime : MonoBehaviour
     [SerializeField] private float damageInterval = 0.5f;
 
     [Header("Scaling Mechanic")]
-    [SerializeField] private float maxScaleMultiplier = 1.5f;
-    [SerializeField] private float scaleDuration = 3.0f;
+    [SerializeField] private float maxScaleMultiplier = 1f;
+    [SerializeField] private float scaleDuration = 2.0f;
 
     public bool isStruggling = false;
     public bool isDead = false;
@@ -160,12 +160,12 @@ public class Slime : MonoBehaviour
 
             if (isScalingUp)
             {
-                if (transform.localScale.x >= 1.75f && MaxHealth < HealthUpgrade1)
+                if (transform.localScale.x >= 1.5f && MaxHealth < HealthUpgrade1)
                 {
                     MaxHealth = HealthUpgrade1;
                     Health = MaxHealth;
                 }
-                if (transform.localScale.x >= 2.49f && MaxHealth < HealthUpgrade2)
+                if (transform.localScale.x >= 2f && MaxHealth < HealthUpgrade2)
                 {
                     MaxHealth = HealthUpgrade2;
                     Health = MaxHealth;
@@ -198,7 +198,7 @@ public class Slime : MonoBehaviour
     }
     IEnumerator DelayedResetVelocity()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         rb.linearVelocity = Vector3.zero;
     }
     public void Death()
