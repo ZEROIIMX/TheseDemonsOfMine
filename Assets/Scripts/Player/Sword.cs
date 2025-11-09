@@ -216,12 +216,12 @@ public class Sword : MonoBehaviour
         slash2 = true;
         attackOnCooldown = false;
         StartCoroutine(ResetSlash2());
-        Debug.Log("S2 available for 0.25");
+        Debug.Log("S2 available for 0.3");
     }
 
     private IEnumerator ResetSlash2()
     {
-        yield return new WaitForSecondsRealtime(0.25f);
+        yield return new WaitForSecondsRealtime(0.3f);
         Debug.Log("S2 end");
         slash2 = false;
         attackOnCooldown = true;
@@ -234,13 +234,13 @@ public class Sword : MonoBehaviour
         slash3 = true;
         attackOnCooldown = false;
         StartCoroutine(ResetSlash3());
-        Debug.Log("S3 available for 0.25");
+        Debug.Log("S3 available for 0.3");
         s2 = false;
     }
 
     private IEnumerator ResetSlash3()
     {
-        yield return new WaitForSecondsRealtime(0.25f);
+        yield return new WaitForSecondsRealtime(0.3f);
         Debug.Log("S3 end");
         slash3 = false;
         attackOnCooldown = true;

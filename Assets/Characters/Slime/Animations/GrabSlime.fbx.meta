@@ -62,7 +62,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.46745563
+      - time: 0.38174134
         functionName: GrabOff
         data: 
         objectReferenceParameter: {instanceID: 0}

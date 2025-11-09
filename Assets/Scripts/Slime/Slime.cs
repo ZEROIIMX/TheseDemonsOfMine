@@ -188,6 +188,8 @@ public class Slime : MonoBehaviour
         {
             damaged = true;
             slimeConnection?.GrabOff();
+            slimeConnection?.RPunchOff();
+            slimeConnection?.LPunchOff();
             if (isDead) return;
             Health -= damageAmount;
             m_animator.SetTrigger("OnHit");

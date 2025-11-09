@@ -39,7 +39,10 @@ public class SwordHitbox : MonoBehaviour
         Slime slimeHealth = collision.gameObject.GetComponent<Slime>();
         if (slimeHealth != null)
         {
-            slimeHealth.TakeDamage(damageAmount);
+            if (!parry)
+            {
+                slimeHealth.TakeDamage(damageAmount);
+            }
             if (slimeHealth.rb != null)
             {
                 slimeHealth.rb.AddForce(hitDirection * slashForce, ForceMode.Impulse);
