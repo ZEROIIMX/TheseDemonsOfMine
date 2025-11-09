@@ -37,7 +37,6 @@ public class CloseDamage : MonoBehaviour
         if (player.TryGetComponent<PlayerHealth>(out var playerHealth))
         {
             playerHealth.TakeDamage(attackDamage);
-            Debug.Log($"{gameObject.name} attacked the player for {attackDamage} damage.");
         }
         cooldownTimer = attackCooldown;
     }
