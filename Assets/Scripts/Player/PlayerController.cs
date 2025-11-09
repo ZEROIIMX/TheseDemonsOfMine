@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Dash(delta));
             animator?.SetBool("Dash", true);
+            sword?.Slash3();
         }
 
         if (isJumpHeld)

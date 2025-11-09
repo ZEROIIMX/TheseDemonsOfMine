@@ -16,9 +16,12 @@ public class SlimeTarget : MonoBehaviour
     private bool activated = false;
 
     [SerializeField] private float grabCooldown = 3f;
-    private bool grab = true;
+    private bool grab = false;
     private Coroutine grabCooldownRoutine;
     public bool hasGrabbed = false;
+
+    private bool punch = true;
+    private Coroutine punchCooldownRoutine;
 
 
     void Start()
@@ -60,11 +63,11 @@ public class SlimeTarget : MonoBehaviour
         {
             if (isChasing)
             {
+                grab = false;
                 isChasing = false;
                 slime.SetChaseState(false);
                 m_animator.SetBool("Walk", false);
                 m_animator.SetTrigger("Grab");
-                grab = false;
 
                 if (grabCooldownRoutine == null)
                 {
@@ -73,6 +76,21 @@ public class SlimeTarget : MonoBehaviour
             }
             agent.isStopped = true;
         }
+        if (distance <= AttackDistance && punch)
+        {
+            punch = false;
+            isChasing = false;
+            slime.SetChaseState(false);
+            m_animator.SetBool("Walk", false);
+            m_animator.SetTrigger("Punch");
+
+            if (punchCooldownRoutine == null)
+            {
+                punchCooldownRoutine = StartCoroutine(PunchCooldown());
+            }
+            agent.isStopped = true;
+        }
+
         else
         {
             if (!isChasing && !slime.isStruggling && !slime.isDead && !hasGrabbed)
@@ -90,6 +108,13 @@ public class SlimeTarget : MonoBehaviour
     {
         yield return new WaitForSeconds(grabCooldown);
         grabCooldownRoutine = null;
+        punch = true;
+    }
+
+    private IEnumerator PunchCooldown()
+    {
+        yield return new WaitForSeconds(grabCooldown);
+        punchCooldownRoutine = null;
         grab = true;
     }
 }

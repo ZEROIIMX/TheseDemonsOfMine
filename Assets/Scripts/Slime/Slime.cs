@@ -33,7 +33,9 @@ public class Slime : MonoBehaviour
 
     private Collider slimeCollider;
     private Collider playerCollider;
+    private SlimeConnection slimeConnection;
 
+    public bool damaged = false;
 
 
     private void Start()
@@ -45,6 +47,7 @@ public class Slime : MonoBehaviour
         initialMaxHealth = MaxHealth;
         initialHealth = Health;
         slimeCollider = GetComponent<Collider>();
+        slimeConnection = GetComponentInChildren<SlimeConnection>();
 
     }
 
@@ -181,15 +184,30 @@ public class Slime : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        Health -= damageAmount;
-        m_animator.SetTrigger("OnHit");
-        Debug.Log(Health);
-
-        if (Health <= 0)
+        if (!damaged)
         {
-            isDead = true;
-            m_animator.SetTrigger("Death");
+            damaged = true;
+            slimeConnection?.GrabOff();
+            if (isDead) return;
+            Health -= damageAmount;
+            m_animator.SetTrigger("OnHit");
+            Debug.Log(Health);
+            rb.isKinematic = false;
+            rb.constraints = RigidbodyConstraints.None;
+            StartCoroutine(DamageCooldown());
+
+            if (Health <= 0)
+            {
+                isDead = true;
+                m_animator.SetTrigger("Death");
+            }
         }
+    }
+
+    IEnumerator DamageCooldown()
+    {
+        yield return new WaitForSeconds(0.2f);
+        damaged = false;
     }
 
     public void TakeForce()
@@ -199,7 +217,8 @@ public class Slime : MonoBehaviour
     IEnumerator DelayedResetVelocity()
     {
         yield return new WaitForSeconds(0.3f);
-        rb.linearVelocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        rb.isKinematic = true;
     }
     public void Death()
     {

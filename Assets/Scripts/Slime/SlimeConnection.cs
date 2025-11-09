@@ -38,4 +38,24 @@ public class SlimeConnection : MonoBehaviour
     {
         slime?.Grab(player);
     }
+
+    public void RPunchOn()
+    {
+        GrabCollision?.ActivateRPunch();
+    }
+
+    public void RPunchOff()
+    {
+        GrabCollision?.DeactivateRPunch();
+    }
+
+    public void LPunchOn()
+    { 
+    GrabCollision?.ActivateLPunch();
+    }
+
+    public void LPunchOff()
+    { 
+    GrabCollision?.DeactivateLPunch();
+    }
 }

@@ -30,8 +30,8 @@ public class GrabCollision : MonoBehaviour
             Sword sword = player.GetComponent<Sword>();
             if (sword != null && sword.isParrying)
             {
-                sword.ParryTime();
                 DeactivateGrab();
+                sword.ParryTime();
             }
             else
             {
@@ -40,8 +40,15 @@ public class GrabCollision : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    { 
+    Debug.Log("Collision Detected");
+    }
+
     public void ActivateGrab()
     {
+        grabLCollider.isTrigger = true;
+        grabRCollider.isTrigger = true;
         grabLCollider.enabled = true;
         grabRCollider.enabled = true;
     }
@@ -50,5 +57,27 @@ public class GrabCollision : MonoBehaviour
     {
         grabLCollider.enabled = false;
         grabRCollider.enabled = false;
+    }
+
+    public void ActivateRPunch()
+    {
+        grabRCollider.isTrigger = false;
+        grabRCollider.enabled = true;
+    }
+
+    public void DeactivateRPunch()
+    {
+        grabRCollider.enabled = false;
+    }
+
+    public void ActivateLPunch()
+    {
+        grabLCollider.isTrigger = false;
+        grabLCollider.enabled = true;
+    }
+
+    public void DeactivateLPunch()
+    {
+        grabLCollider.enabled = false;
     }
 }
