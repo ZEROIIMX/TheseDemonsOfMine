@@ -47,7 +47,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6291716032900747498}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -386731530326178724, guid: e4c2e2d2d589bc4459bef78095447d50, type: 3}
 --- !u!23 &1785466444300624857
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: -5116761141487594947, guid: e4c2e2d2d589bc4459bef78095447d50, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -116,9 +116,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5000001
-  m_Height: 2
+  m_Height: 2.6479974
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0.91682506, z: 0}
 --- !u!195 &4283437669174729345
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &8593577400146595402
@@ -188,6 +188,7 @@ MonoBehaviour:
   circleFormationDistance: 4
   circleRadius: 3
   deathAnimationDuration: 1
+  rotationSpeed: 10
 --- !u!95 &9029072995166288589
 Animator:
   serializedVersion: 7
@@ -232,7 +233,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0

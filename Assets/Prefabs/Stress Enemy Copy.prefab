@@ -47,7 +47,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8398919878906824070}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -386731530326178724, guid: e4c2e2d2d589bc4459bef78095447d50, type: 3}
 --- !u!23 &510985478230263649
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: -5116761141487594947, guid: e4c2e2d2d589bc4459bef78095447d50, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -116,9 +116,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5000001
-  m_Height: 2
+  m_Height: 2.6479974
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0.91682506, z: 0}
 --- !u!195 &1825510776929759077
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0.31
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &5797358053777286963
@@ -231,9 +231,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiplyEnemy
   Health: 10
+  activationDistance: 25
+  circleFormationDistance: 0
+  circleRadius: 0
+  rotationSpeed: 10
   enemyCopyPrefab: {fileID: 0}
   numberOfCopies: 0
   spawnRadius: 0
-  circleFormationDistance: 0
-  circleRadius: 0
   deathAnimationDuration: 1

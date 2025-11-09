@@ -5,14 +5,25 @@ using UnityEngine;
 [DefaultExecutionOrder(100)]
 public class MultiplyEnemy : MonoBehaviour
 {
+    [Header("Stats")]
     public float Health;
-    private bool isDead;
+
+    [Header("Behavior")]
+    public float activationDistance = 25f;
+    public float circleFormationDistance;
+    public float circleRadius;
+    public float rotationSpeed = 10f;
+
+    [Header("Spawning")]
     public GameObject enemyCopyPrefab;
     public int numberOfCopies;
     public float spawnRadius;
-    public float circleFormationDistance;
-    public float circleRadius;
+
+    [Header("Death")]
     public float deathAnimationDuration;
+
+    private bool isDead;
+    private bool isActivated = false;
     private List<AIUnit> groupUnits = new List<AIUnit>();
     private Transform player;
     private bool isCircling;
@@ -31,6 +42,12 @@ public class MultiplyEnemy : MonoBehaviour
         {
             rb.isKinematic = true;
         }
+
+        if (selfAIUnit != null && selfAIUnit.Agent != null)
+        {
+            selfAIUnit.Agent.updateRotation = false;
+            selfAIUnit.Agent.isStopped = true;
+        }
     }
 
     private void Start()
@@ -39,47 +56,46 @@ public class MultiplyEnemy : MonoBehaviour
 
         if (player == null)
         {
-            Debug.LogError($"[{gameObject.name}] Player target not found via AIManager. Disabling script.", this);
             enabled = false;
             return;
-        }
-
-        if (leader == null && !wasCopy)
-        {
-            if (enemyCopyPrefab == null)
-            {
-                Debug.LogError($"[{gameObject.name}] 'Enemy Copy Prefab' is not assigned in the Inspector! Cannot spawn copies.", this);
-                if (!groupUnits.Contains(selfAIUnit))
-                {
-                    groupUnits.Add(selfAIUnit);
-                }
-                return;
-            }
-
-            if (!groupUnits.Contains(selfAIUnit))
-            {
-                groupUnits.Add(selfAIUnit);
-            }
-            for (int i = 0; i < numberOfCopies; i++)
-            {
-                SpawnCopy();
-            }
         }
     }
 
     private void Update()
     {
+        if (isDead) return;
+
+        if (!isActivated)
+        {
+            if (Vector3.Distance(transform.position, player.position) <= activationDistance)
+            {
+                Activate();
+            }
+            return;
+        }
+
         if (leader != null && leader.isDead)
         {
             leader = null;
-            wasCopy = true; 
+            wasCopy = true;
             if (!groupUnits.Contains(selfAIUnit))
             {
                 groupUnits.Add(selfAIUnit);
             }
         }
 
-        if (isDead || leader != null) return;
+        if (player != null)
+        {
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            directionToPlayer.y = 0;
+            if (directionToPlayer != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            }
+        }
+
+        if (leader != null) return;
 
         if (isCircling)
         {
@@ -101,6 +117,27 @@ public class MultiplyEnemy : MonoBehaviour
                         unit.MoveTo(player.position);
                     }
                 }
+            }
+        }
+    }
+
+    private void Activate()
+    {
+        isActivated = true;
+        if (selfAIUnit.Agent != null)
+        {
+            selfAIUnit.Agent.isStopped = false;
+        }
+
+        if (leader == null && !wasCopy)
+        {
+            if (!groupUnits.Contains(selfAIUnit))
+            {
+                groupUnits.Add(selfAIUnit);
+            }
+            for (int i = 0; i < numberOfCopies; i++)
+            {
+                SpawnCopy();
             }
         }
     }
@@ -143,9 +180,14 @@ public class MultiplyEnemy : MonoBehaviour
     {
         if (isDead) return;
 
+        if (!isActivated)
+        {
+            Activate();
+        }
+
         Health -= damageAmount;
         m_animator?.SetTrigger("OnHit");
-    
+
         StartCoroutine(ApplyHitForce(hitDirection, force));
 
         if (Health <= 0)
@@ -193,8 +235,9 @@ public class MultiplyEnemy : MonoBehaviour
 
         if (!isDead)
         {
-            rb.isKinematic = true; 
+            rb.isKinematic = true;
             selfAIUnit.Agent.enabled = true;
+            selfAIUnit.Agent.updateRotation = false; 
         }
     }
 
