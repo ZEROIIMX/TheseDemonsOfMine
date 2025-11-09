@@ -155,8 +155,17 @@ public class Sword : MonoBehaviour
             s3 = true;
             RestartAttackCooldown();
         }
+        else if (!equipped && !slash2 && slash3)
+        {
+            playerController?.JumpingSlash();
+            childAnimator.SetTrigger("SpinDraw");
+            slash3 = false;
+            attackOnCooldown = true;
+            s3 = true;
+            RestartAttackCooldown();
+        }
 
-        RestartSaveCooldown();
+            RestartSaveCooldown();
     }
 
     private IEnumerator AttackCooldown()

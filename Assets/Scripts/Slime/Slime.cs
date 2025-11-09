@@ -37,6 +37,10 @@ public class Slime : MonoBehaviour
 
     public bool damaged = false;
 
+    private bool Upgrade1= false;
+
+    private bool Upgrade2= false;
+
 
     private void Start()
     {
@@ -163,15 +167,19 @@ public class Slime : MonoBehaviour
 
             if (isScalingUp)
             {
-                if (transform.localScale.x >= 1.5f && MaxHealth < HealthUpgrade1)
+                if (transform.localScale.x >= 1.5f && !Upgrade1)
                 {
-                    MaxHealth = HealthUpgrade1;
-                    Health = MaxHealth;
+                    Upgrade1 = true;
+                    Health += HealthUpgrade1;
+                    MaxHealth = 200;
+                    Debug.Log("Slime" + Health);
                 }
-                if (transform.localScale.x >= 2f && MaxHealth < HealthUpgrade2)
+                if (transform.localScale.x >= 2f && !Upgrade2)
                 {
-                    MaxHealth = HealthUpgrade2;
-                    Health = MaxHealth;
+                    Upgrade2 = true;
+                    Health += HealthUpgrade2;
+                    MaxHealth = 300;
+                    Debug.Log("Slime" + Health);
                 }
             }
 
@@ -197,6 +205,7 @@ public class Slime : MonoBehaviour
             rb.isKinematic = false;
             rb.constraints = RigidbodyConstraints.None;
             StartCoroutine(DamageCooldown());
+            Debug.Log("Slime Health: " + Health);
 
             if (Health <= 0)
             {
@@ -208,7 +217,7 @@ public class Slime : MonoBehaviour
 
     IEnumerator DamageCooldown()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSecondsRealtime(0.1f);
         damaged = false;
     }
 

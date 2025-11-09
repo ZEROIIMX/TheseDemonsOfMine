@@ -8,12 +8,15 @@ public class ParentConnection : MonoBehaviour
 
     private SwordHitbox swordHitbox;
 
+    private Animator animator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         sword = GetComponentInParent<Sword>();
         playerController = GetComponentInParent<PlayerController>();
         swordHitbox = GetComponentInChildren<SwordHitbox>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -82,5 +85,10 @@ public class ParentConnection : MonoBehaviour
     public void S3HBEnd()
     {
         swordHitbox?.S3HitboxEnd();
+    }
+
+    public void S3Draw()
+    { 
+    animator?.SetTrigger("3");
     }
 }
