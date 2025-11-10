@@ -3,7 +3,6 @@ using UnityEngine;
 public class CloseDamage : MonoBehaviour
 {
     [Header("Attack Settings")]
-    [SerializeField] private float attackDamage = 10f;
     [SerializeField] private float attackDistance = 3f;
     [SerializeField] private float attackCooldown = 2f;
 

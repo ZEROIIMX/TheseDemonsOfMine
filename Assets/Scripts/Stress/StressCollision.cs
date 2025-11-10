@@ -11,6 +11,8 @@ public class StressCollision : MonoBehaviour
 
     public LayerMask targetLayer;
 
+    private float damage;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,14 +27,38 @@ public class StressCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger Detected");
         if (((1 << other.gameObject.layer) & targetLayer) == 0) return;
+
+        PlayerController player = other.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            Sword sword = player.GetComponent<Sword>();
+
+            if (sword != null && sword.isParrying)
+            {
+                    A1END();
+                    A2END();
+                    A3END();
+                    sword.ParryTime();
+                    return;
+            }
+
+            else
+            {
+                PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage(damage);
+                }
+            }
+        }
     }
 
     public void A1()
     {
         RCollider.enabled = true;
         RTrigger.enabled = true;
+        damage = 10;
     }
 
     public void A1END()
@@ -45,6 +71,7 @@ public class StressCollision : MonoBehaviour
     {
         LCollider.enabled = true;
         LTrigger.enabled = true;
+        damage = 15;
     }
 
     public void A2END()
@@ -59,6 +86,7 @@ public class StressCollision : MonoBehaviour
         RTrigger.enabled = true;
         LCollider.enabled = true;
         LTrigger.enabled = true;
+        damage = 20;
     }
 
     public void A3END()

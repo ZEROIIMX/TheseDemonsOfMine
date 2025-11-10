@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class StressConnection : MonoBehaviour
 {
-    private CloseDamage closeDamage;
+    private MultiplyEnemy multiplyEnemy;
 
     private StressCollision stressCollision;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        closeDamage = GetComponentInParent<CloseDamage>();
+        multiplyEnemy = GetComponentInParent<MultiplyEnemy>();
         stressCollision = GetComponentInChildren<StressCollision>();
     }
 
@@ -47,5 +47,15 @@ public class StressConnection : MonoBehaviour
     public void A3OFF()
     {
         stressCollision?.A3END();
+    }
+
+    public void Death()
+    {
+        multiplyEnemy?.Destroy();
+    }
+
+    public void Tracking()
+    {
+        multiplyEnemy?.ResumeTracking();
     }
 }

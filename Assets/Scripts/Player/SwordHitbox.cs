@@ -54,7 +54,15 @@ public class SwordHitbox : MonoBehaviour
         MultiplyEnemy multiplyEnemy = collision.gameObject.GetComponent<MultiplyEnemy>();
         if (multiplyEnemy != null)
         {
-            multiplyEnemy.TakeDamage(damageAmount, hitDirection, slashForce);
+            if (!parry)
+            { 
+            multiplyEnemy.TakeDamage(damageAmount);
+            }
+            if (multiplyEnemy.rb != null)
+            {
+                multiplyEnemy.rb.AddForce(hitDirection * (slashForce * 0.6f), ForceMode.Impulse);
+                multiplyEnemy.TakeForce();
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,29 +20,33 @@ public class MultiplyEnemy : MonoBehaviour
     public float spawnRadius = 5f;
     public float spawnDelay = 2f;
     public float trackingDelay = 2f;
-    public bool trackingStarted = false;
 
     [Header("Death")]
     public float deathAnimationDuration;
 
     private bool isDead;
     private bool isActivated = false;
+    private bool trackingStarted = false;
+    private bool wasCopy = false;
+    private bool isTemporarilyStunned = false;
+    private bool damaged = false;
+
     private List<AIUnit> groupUnits = new List<AIUnit>();
     private Transform player;
     private Animator m_animator;
     private AIUnit selfAIUnit;
     private MultiplyEnemy leader;
-    private bool wasCopy = false;
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     private CloseDamage closeDamage;
-
-    private bool isTemporarilyStunned = false;
+    private StressConnection stressConnection;
 
     private void Awake()
     {
+        stressConnection = GetComponent<StressConnection>();
         closeDamage = GetComponent<CloseDamage>();
-        closeDamage.enabled = false;
+        if (closeDamage != null) closeDamage.enabled = false;
+
         m_animator = GetComponentInChildren<Animator>();
         selfAIUnit = GetComponent<AIUnit>();
         rb = GetComponent<Rigidbody>();
@@ -71,27 +75,13 @@ public class MultiplyEnemy : MonoBehaviour
             return;
         }
 
-        if (leader != null && leader.isDead)
-        {
-            leader = null;
-            wasCopy = true;
-            if (!groupUnits.Contains(selfAIUnit)) groupUnits.Add(selfAIUnit);
-        }
-
         RotateTowardPlayer();
 
-        if (leader != null) return;
+        if (isTemporarilyStunned || !trackingStarted) return;
 
-        if (trackingStarted && !isTemporarilyStunned)
+        if (selfAIUnit != null && selfAIUnit.Agent.isActiveAndEnabled)
         {
-            groupUnits.RemoveAll(item => item == null);
-            foreach (var unit in groupUnits)
-            {
-                if (unit != null && unit.Agent.isActiveAndEnabled)
-                {
-                    unit.MoveTo(player.position);
-                }
-            }
+            selfAIUnit.MoveTo(player.position);
         }
     }
 
@@ -120,7 +110,7 @@ public class MultiplyEnemy : MonoBehaviour
 
         if (leader == null && !wasCopy)
         {
-            if (!groupUnits.Contains(selfAIUnit)) groupUnits.Add(selfAIUnit);
+            AddToGroup(selfAIUnit);
             StartSpawningCopies();
         }
     }
@@ -131,34 +121,6 @@ public class MultiplyEnemy : MonoBehaviour
         StartCoroutine(DelayedTrackingStart());
     }
 
-    private IEnumerator DelayedTrackingStart()
-    {
-        float totalSpawnTime = spawnDelay + (numberOfCopies * spawnInterval);
-        yield return new WaitForSeconds(totalSpawnTime + trackingDelay);
-
-        trackingStarted = true;
-
-        if (closeDamage != null)
-        {
-            closeDamage.enabled = true;
-        }
-
-        m_animator?.SetBool("Run", true);
-
-        foreach (var unit in groupUnits)
-        {
-            MultiplyEnemy copy = unit.GetComponent<MultiplyEnemy>();
-            copy?.StartTrackingAnimation();
-
-            CloseDamage copyDamage = copy?.GetComponent<CloseDamage>();
-            if (copyDamage != null)
-            {
-                copyDamage.enabled = true;
-            }
-        }
-    }
-
-
     private IEnumerator SpawnCopiesOverTime()
     {
         yield return new WaitForSeconds(spawnDelay);
@@ -166,6 +128,28 @@ public class MultiplyEnemy : MonoBehaviour
         {
             SpawnSingleCopy();
             yield return new WaitForSeconds(spawnInterval);
+        }
+    }
+
+    private IEnumerator DelayedTrackingStart()
+    {
+        float totalSpawnTime = spawnDelay + (numberOfCopies * spawnInterval);
+        yield return new WaitForSeconds(totalSpawnTime + trackingDelay);
+
+        // Start tracking for leader and all copies
+        foreach (var unit in groupUnits)
+        {
+            MultiplyEnemy enemy = unit.GetComponent<MultiplyEnemy>();
+            if (enemy != null)
+            {
+                enemy.trackingStarted = true;
+                enemy.isActivated = true;
+
+                if (enemy.closeDamage != null)
+                    enemy.closeDamage.enabled = true;
+
+                enemy.m_animator?.SetBool("Run", true);
+            }
         }
     }
 
@@ -187,37 +171,19 @@ public class MultiplyEnemy : MonoBehaviour
             aiUnit.Agent.isStopped = false;
             aiUnit.Agent.speed = movementSpeed;
 
-            if (!groupUnits.Contains(aiUnit))
-            {
-                groupUnits.Add(aiUnit);
-            }
-
-            if (trackingStarted && aiUnit.Agent.isOnNavMesh)
-            {
-                aiUnit.MoveTo(player.position);
-            }
+            AddToGroup(aiUnit);
         }
 
         if (copyEnemy != null)
         {
             copyEnemy.SetLeader(this);
-
-            if (trackingStarted)
-            {
-                copyEnemy.StartTrackingAnimation();
-            }
         }
 
         CloseDamage copyDamage = copyObject.GetComponent<CloseDamage>();
         if (copyDamage != null)
         {
-            copyDamage.enabled = trackingStarted;
+            copyDamage.enabled = false;
         }
-    }
-
-    public void StartTrackingAnimation()
-    {
-        m_animator?.SetBool("Run", true);
     }
 
     public void SetLeader(MultiplyEnemy leaderInstance)
@@ -226,76 +192,93 @@ public class MultiplyEnemy : MonoBehaviour
         wasCopy = true;
     }
 
+    public void StartTrackingAnimation()
+    {
+        m_animator?.SetBool("Run", true);
+    }
+
     public void RemoveUnitFromGroup(AIUnit unit)
     {
         if (groupUnits.Contains(unit)) groupUnits.Remove(unit);
     }
 
-    public void TakeDamage(int damageAmount, Vector3 hitDirection, float force)
+    public void TakeDamage(int damageAmount)
     {
-        if (isDead) return;
-
-        if (!isActivated) Activate();
-
-        Health -= damageAmount;
-        isTemporarilyStunned = true;
-        m_animator?.SetBool("Run", false);
-        m_animator?.SetTrigger("OnHit");
-        StartCoroutine(ApplyHitForce(hitDirection, force));
-
-        if (Health <= 0)
+        if (isDead || !trackingStarted) return;
+        if (!damaged)
         {
-            isDead = true;
-            m_animator?.SetTrigger("Death");
+            damaged = true;
+            if (!isActivated) Activate();
 
-            if (selfAIUnit?.Agent != null) selfAIUnit.Agent.enabled = false;
-            Collider col = GetComponent<Collider>();
-            if (col != null)
+            stressConnection?.A1OFF();
+            stressConnection?.A2OFF();
+            stressConnection?.A3OFF();
+
+            Health -= damageAmount;
+            isTemporarilyStunned = true;
+            m_animator?.SetBool("Run", false);
+            m_animator?.SetTrigger("OnHit");
+
+            if (rb != null)
             {
-                col.enabled = false;
+                rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints.None;
             }
 
-            if (leader != null) leader.RemoveUnitFromGroup(selfAIUnit);
-            else groupUnits.Clear();
+            StartCoroutine(DamageCooldown());
 
-            StartCoroutine(DeathSequence());
+            if (Health <= 0)
+            {
+                isDead = true;
+                m_animator?.SetTrigger("Death");
+
+                if (selfAIUnit?.Agent != null) selfAIUnit.Agent.enabled = false;
+                Collider col = GetComponent<Collider>();
+                if (col != null) col.enabled = false;
+
+                if (leader != null) leader.RemoveUnitFromGroup(selfAIUnit);
+                else groupUnits.Clear();
+            }
         }
     }
 
-    private IEnumerator ApplyHitForce(Vector3 hitDirection, float force)
+    IEnumerator DamageCooldown()
     {
-        if (selfAIUnit.Agent.isActiveAndEnabled) selfAIUnit.Agent.enabled = false;
-        rb.isKinematic = false;
-        rb.AddForce(hitDirection * force, ForceMode.Impulse);
-
-        yield return new WaitForSeconds(0.5f);
-
-        if (!isDead)
-        {
-            rb.isKinematic = true;
-            selfAIUnit.Agent.enabled = true;
-            selfAIUnit.Agent.updateRotation = false;
-        }
+        yield return new WaitForSecondsRealtime(0.1f);
+        damaged = false;
     }
 
-    private IEnumerator DeathSequence()
-    {
-        yield return new WaitForSeconds(deathAnimationDuration);
-        Destroy(gameObject);
-    }
-
-    public void Death()
-    {
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-            rb.linearVelocity = Vector3.zero;
-        }
-
-        if (!isDead) StartCoroutine(DeathSequence());
-    }
     public void ResumeTracking()
     {
         isTemporarilyStunned = false;
+        m_animator.SetBool("Run", true); 
+    }
+
+    public void TakeForce()
+    {
+        StartCoroutine(DelayedResetVelocity());
+    }
+
+    IEnumerator DelayedResetVelocity()
+    {
+        yield return new WaitForSeconds(0.3f);
+        if (rb != null)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            rb.isKinematic = true;
+        }
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    private void AddToGroup(AIUnit unit)
+    {
+        if (unit != null && !groupUnits.Contains(unit))
+        {
+            groupUnits.Add(unit);
+        }
     }
 }

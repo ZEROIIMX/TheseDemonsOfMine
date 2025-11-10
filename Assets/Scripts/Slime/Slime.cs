@@ -35,7 +35,7 @@ public class Slime : MonoBehaviour
     private Collider playerCollider;
     private SlimeConnection slimeConnection;
 
-    public bool damaged = false;
+    private bool damaged = false;
 
     private bool Upgrade1= false;
 
