@@ -27,7 +27,6 @@ public class GrabCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger Detected");
 
         if (((1 << other.gameObject.layer) & targetLayer) == 0) return;
 

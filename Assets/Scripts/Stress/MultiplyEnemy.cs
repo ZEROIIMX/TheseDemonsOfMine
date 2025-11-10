@@ -20,7 +20,7 @@ public class MultiplyEnemy : MonoBehaviour
     public float spawnRadius = 5f;
     public float spawnDelay = 2f;
     public float trackingDelay = 2f;
-    private bool trackingStarted = false;
+    public bool trackingStarted = false;
 
     [Header("Death")]
     public float deathAnimationDuration;
@@ -35,8 +35,14 @@ public class MultiplyEnemy : MonoBehaviour
     private bool wasCopy = false;
     private Rigidbody rb;
 
+    private CloseDamage closeDamage;
+
+    private bool isTemporarilyStunned = false;
+
     private void Awake()
     {
+        closeDamage = GetComponent<CloseDamage>();
+        closeDamage.enabled = false;
         m_animator = GetComponentInChildren<Animator>();
         selfAIUnit = GetComponent<AIUnit>();
         rb = GetComponent<Rigidbody>();
@@ -76,7 +82,7 @@ public class MultiplyEnemy : MonoBehaviour
 
         if (leader != null) return;
 
-        if (trackingStarted)
+        if (trackingStarted && !isTemporarilyStunned)
         {
             groupUnits.RemoveAll(item => item == null);
             foreach (var unit in groupUnits)
@@ -131,14 +137,27 @@ public class MultiplyEnemy : MonoBehaviour
         yield return new WaitForSeconds(totalSpawnTime + trackingDelay);
 
         trackingStarted = true;
+
+        if (closeDamage != null)
+        {
+            closeDamage.enabled = true;
+        }
+
         m_animator?.SetBool("Run", true);
 
         foreach (var unit in groupUnits)
         {
             MultiplyEnemy copy = unit.GetComponent<MultiplyEnemy>();
             copy?.StartTrackingAnimation();
+
+            CloseDamage copyDamage = copy?.GetComponent<CloseDamage>();
+            if (copyDamage != null)
+            {
+                copyDamage.enabled = true;
+            }
         }
     }
+
 
     private IEnumerator SpawnCopiesOverTime()
     {
@@ -164,7 +183,7 @@ public class MultiplyEnemy : MonoBehaviour
 
         if (aiUnit != null && aiUnit.Agent != null)
         {
-            aiUnit.Agent.enabled = true; // Ensure agent is active
+            aiUnit.Agent.enabled = true;
             aiUnit.Agent.isStopped = false;
             aiUnit.Agent.speed = movementSpeed;
 
@@ -188,9 +207,13 @@ public class MultiplyEnemy : MonoBehaviour
                 copyEnemy.StartTrackingAnimation();
             }
         }
+
+        CloseDamage copyDamage = copyObject.GetComponent<CloseDamage>();
+        if (copyDamage != null)
+        {
+            copyDamage.enabled = trackingStarted;
+        }
     }
-
-
 
     public void StartTrackingAnimation()
     {
@@ -215,8 +238,9 @@ public class MultiplyEnemy : MonoBehaviour
         if (!isActivated) Activate();
 
         Health -= damageAmount;
+        isTemporarilyStunned = true;
+        m_animator?.SetBool("Run", false);
         m_animator?.SetTrigger("OnHit");
-
         StartCoroutine(ApplyHitForce(hitDirection, force));
 
         if (Health <= 0)
@@ -269,5 +293,9 @@ public class MultiplyEnemy : MonoBehaviour
         }
 
         if (!isDead) StartCoroutine(DeathSequence());
+    }
+    public void ResumeTracking()
+    {
+        isTemporarilyStunned = false;
     }
 }

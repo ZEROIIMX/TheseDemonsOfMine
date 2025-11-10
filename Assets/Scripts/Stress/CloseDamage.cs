@@ -10,8 +10,11 @@ public class CloseDamage : MonoBehaviour
     private Transform player;
     private float cooldownTimer;
 
+    private Animator m_animator;
+
     void Start()
     {
+        m_animator = GetComponentInChildren<Animator>();
         player = AIManager.Instance.Target;
         cooldownTimer = 0;
     }
@@ -34,11 +37,37 @@ public class CloseDamage : MonoBehaviour
 
     private void Attack()
     {
-        if (player.TryGetComponent<PlayerHealth>(out var playerHealth))
+        int attackIndex = Random.Range(0, 3);
+
+        switch (attackIndex)
         {
-            playerHealth.TakeDamage(attackDamage);
+            case 0:
+                A1();
+                break;
+            case 1:
+                A2();
+                break;
+            case 2:
+                A3();
+                break;
         }
+
         cooldownTimer = attackCooldown;
+    }
+
+    private void A1()
+    {
+        m_animator.SetTrigger("1");
+    }
+
+    private void A2()
+    {
+        m_animator.SetTrigger("2");
+    }
+
+    private void A3()
+    {
+        m_animator.SetTrigger("3");
     }
 }
 

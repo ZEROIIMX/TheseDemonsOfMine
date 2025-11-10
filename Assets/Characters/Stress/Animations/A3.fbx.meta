@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d99e46c1aa8f92d42b567dfd96f4e9ee
+guid: 9f1706d9847ce2e48a29f0b010ad2c61
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -15,7 +15,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: 
+    motionNodeName: <Root Transform>
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -35,15 +35,15 @@ ModelImporter:
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 277
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -52,12 +52,26 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.2648402
+        functionName: A3ON
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.34703195
+        functionName: A3OFF
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: b632ae37b9dad2047994bc00cd46172a, type: 2}
       additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:

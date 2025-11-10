@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour
 
         Vector3 desiredPosition = target.position + sideOffset + depthOffset + heightOffsetVec;
 
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.unscaledDeltaTime);
 
         if (lookAtTarget)
         {
