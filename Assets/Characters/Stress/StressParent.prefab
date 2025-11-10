@@ -48,8 +48,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5000001
-  m_Speed: 16
-  m_Acceleration: 8
+  m_Speed: 8
+  m_Acceleration: 13
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -86,10 +86,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiplyEnemy
   Health: 10
-  activationDistance: 5
+  activationDistance: 7
   rotationSpeed: 10
-  movementSpeed: 16
-  enemyCopyPrefab: {fileID: 4844525284774367253, guid: fe358af03068d8542b20cd7a444eb074, type: 3}
+  movementSpeed: 10
+  enemyCopyPrefab: {fileID: 879069621304188504}
   numberOfCopies: 8
   spawnInterval: 0.2
   spawnRadius: 3.5

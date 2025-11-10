@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,6 +45,10 @@ public class PlayerController : MonoBehaviour
 
     private bool useUnscaledTime = false;
 
+    private Vector2 look = Vector2.zero;
+    [SerializeField] float worldBottomBounndary = -100f;
+    (Vector3, Quaternion) initialPositionAndRotation;
+
     public void UseUnscaledTime(bool value)
     {
         useUnscaledTime = value;
@@ -58,6 +63,7 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         sword = GetComponent<Sword>();
+        initialPositionAndRotation = (transform.position, transform.rotation);
     }
 
     void Update()
@@ -114,6 +120,10 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(moveInput);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, delta * 10f);
         }
+        else if (!isDashing && isRootMotionActive)
+        {
+            controller.Move(new Vector3(0, velocity.y, 0) * delta);
+        }
 
         if (controller.isGrounded && !isJumping)
         {
@@ -143,6 +153,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Run", moveInput != Vector3.zero);
             animator.SetBool("IsGrounded", isDashing ? true : controller.isGrounded);
         }
+
+        CheckBounds();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -250,5 +262,23 @@ public class PlayerController : MonoBehaviour
     public bool IsDashing()
     {
         return isDashing;
+    }
+
+    public void Teleport(Vector3 position, Quaternion rotation)
+    {
+        transform.position = position;
+        Physics.SyncTransforms();
+        look.x = rotation.eulerAngles.y;
+        look.y = rotation.eulerAngles.z;
+        velocity = Vector3.zero;
+    }
+
+    void CheckBounds()
+    {
+        if (transform.position.y < worldBottomBounndary)
+        {
+            var (position, rotation) = initialPositionAndRotation;
+            Teleport(position, rotation);
+        }
     }
 }
