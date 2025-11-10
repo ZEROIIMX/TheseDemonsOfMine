@@ -23,10 +23,17 @@ public class FearEnemy : MonoBehaviour
     private Animator animator;
     private GameObject currentPortal;
     private Transform mainCamera;
+    private PlayerController playerController;
+
+    private Vector3 offset = new Vector3(0.5f, 0f, 0f);
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player != null)
+        {
+            playerController = player.GetComponent<PlayerController>();
+        }
         mainCamera = Camera.main.transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
@@ -75,12 +82,26 @@ public class FearEnemy : MonoBehaviour
         TeleportAndAttack();
     }
 
+    private Vector3 GetPlayerPredictedPosition()
+    {
+        if (playerController != null)
+        {
+            return player.position + playerController.GetVelocity() * Time.deltaTime;
+        }
+        return player.position;
+    }
+
     private void TeleportTowardsPlayer(float distance)
     {
         if (player == null) return;
 
-        Vector3 directionToPlayer = (transform.position - player.position).normalized;
-        Vector3 targetPosition = player.position + directionToPlayer * distance;
+        Vector3 predictedPlayerPosition = GetPlayerPredictedPosition();
+        Vector3 directionToPlayer = (transform.position - predictedPlayerPosition).normalized;
+        if (transform.position.x - predictedPlayerPosition.x > 0)
+        {
+            directionToPlayer = new Vector3(-directionToPlayer.x, directionToPlayer.y, directionToPlayer.z);
+        }
+        Vector3 targetPosition = predictedPlayerPosition + directionToPlayer * distance;
 
         if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
         {
@@ -98,7 +119,8 @@ public class FearEnemy : MonoBehaviour
     {
         if (player == null) return;
 
-        Vector3 targetPosition = player.position - player.forward * attackDistance;
+        Vector3 predictedPlayerPosition = GetPlayerPredictedPosition();
+        Vector3 targetPosition = predictedPlayerPosition - new Vector3(1.0f,0.0f,0.0f) * attackDistance;
 
         if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
         {
@@ -149,7 +171,7 @@ public class FearEnemy : MonoBehaviour
         }
 
         if (portalPrefab != null)
-        {
+        {   
             Vector3 portalPosition = enemyTeleportPosition;
             Quaternion portalRotation = transform.rotation;
 
