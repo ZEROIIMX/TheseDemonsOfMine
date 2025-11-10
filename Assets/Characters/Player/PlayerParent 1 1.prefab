@@ -319,12 +319,11 @@ MonoBehaviour:
   dashSpeed: 40
   dashDuration: 0.1
   dashCooldown: 1
-  dashDurationDuringS2: 0.05
-  dashSpeedDuringS2: 40
   doubleJumpLayer:
     serializedVersion: 2
     m_Bits: 64
   isRootMotionActive: 0
+  worldBottomBounndary: -100
 --- !u!114 &6955122583248879521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,7 +349,6 @@ MonoBehaviour:
   parryCd: 3
   isParrying: 0
   isHeld: 0
-  isGrounded: 0
 --- !u!114 &3027433840155980550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,7 +535,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  slashForce: 8
+  slashForce: 10
 --- !u!65 &8859644017176223034
 BoxCollider:
   m_ObjectHideFlags: 0
