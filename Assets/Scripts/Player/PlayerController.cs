@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 1f;
-    public float dashDurationDuringS2 = 0.05f;
-    public float dashSpeedDuringS2 = 20f;
 
     [Header("Wall Jump Settings")]
     public LayerMask doubleJumpLayer;
@@ -35,7 +33,6 @@ public class PlayerController : MonoBehaviour
     private bool canDash = true;
     private bool hasWallJumped = false;
     private bool isTouchingWall = false;
-    private bool S2 = false;
 
     public bool isRootMotionActive = false;
 
@@ -95,7 +92,7 @@ public class PlayerController : MonoBehaviour
         {
             bool canWallJump = isTouchingWall && !hasWallJumped;
 
-            if (isGrounded && !isJumping && !S2)
+            if (isGrounded && !isJumping)
             {
                 isGrounded = false;
                 StartCoroutine(JumpResetDelay());
@@ -111,10 +108,6 @@ public class PlayerController : MonoBehaviour
 
         isTouchingWall = false;
 
-        if (S2 || sword.IsParrying())
-        {
-            moveInput = Vector3.zero;
-        }
 
         if (!isDashing && !isRootMotionActive && moveInput != Vector3.zero)
         {
@@ -128,12 +121,10 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             hasWallJumped = false;
             wallJump = false;
-            sword.isGrounded = true;
         }
         else
         {
             velocity.y += gravity * delta;
-            sword.isGrounded = false;
         }
 
         if (!isDashing && !isRootMotionActive)
@@ -149,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
         if (animator != null)
         {
-            animator.SetBool("Run", !S2 && moveInput != Vector3.zero);
+            animator.SetBool("Run", moveInput != Vector3.zero);
             animator.SetBool("IsGrounded", isDashing ? true : controller.isGrounded);
         }
     }
@@ -174,17 +165,8 @@ public class PlayerController : MonoBehaviour
             float z = input.x;
             Vector3 newInput = new Vector3(-x, 0, z);
             latestMoveInput = newInput;
-
-            if (S2)
-            {
-                bufferedMoveInput = newInput;
-                moveInput = Vector3.zero;
-            }
-            else
-            {
-                moveInput = newInput;
-                bufferedMoveInput = Vector3.zero;
-            }
+            moveInput = newInput;
+            bufferedMoveInput = Vector3.zero;
         }
     }
 
@@ -227,15 +209,13 @@ public class PlayerController : MonoBehaviour
         canDash = false;
 
         float timer = 0f;
-        float currentDashDuration = S2 ? dashDurationDuringS2 : dashDuration;
-        float currentDashSpeed = S2 ? dashSpeedDuringS2 : dashSpeed;
 
         Vector3 dashDirection = latestMoveInput != Vector3.zero ? latestMoveInput.normalized : transform.forward;
         transform.rotation = Quaternion.LookRotation(dashDirection);
 
-        while (timer < currentDashDuration)
+        while (timer < dashDuration)
         {
-            controller.Move(dashDirection * currentDashSpeed * delta);
+            controller.Move(dashDirection * dashSpeed * delta);
             timer += delta;
             yield return null;
         }
@@ -255,18 +235,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Attacking()
-    {
-        moveSpeed = 0f;
-        S2 = true;
-    }
-
-    public void AttackingFinished()
-    {
-        moveSpeed = 6.5f;
-        S2 = false;
-    }
-
     public void JumpingSlash()
     {
         moveSpeed = 6.5f;
@@ -277,18 +245,6 @@ public class PlayerController : MonoBehaviour
         moveSpeed = 6.5f;
         sword?.setS3False();
         sword?.RestartAttackCooldown();
-    }
-
-    public void Parrying()
-    {
-        moveSpeed = 0f;
-        S2 = true;
-    }
-
-    public void ParryEnd()
-    {
-        moveSpeed = 6.5f;
-        S2 = false;
     }
 
     public bool IsDashing()

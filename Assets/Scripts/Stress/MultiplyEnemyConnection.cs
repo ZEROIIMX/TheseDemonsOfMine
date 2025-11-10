@@ -6,6 +6,7 @@ public class MultiplyEnemyConnection : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("MultiplyEnemyConnection Start called");
         multiplyEnemy = GetComponentInParent<MultiplyEnemy>();
     }
 

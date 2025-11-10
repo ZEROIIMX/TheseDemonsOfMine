@@ -50,7 +50,6 @@ public class Sword : MonoBehaviour
 
     public bool isParrying = false;
     public bool isHeld = false;
-    public bool isGrounded = false;
 
     void Start()
     {
@@ -67,7 +66,7 @@ public class Sword : MonoBehaviour
 
     void Update()
     {
-        if (isParryHeld && parry && !isHeld && isGrounded)
+        if (isParryHeld && parry && !isHeld)
         {
             if (!equipped)
             {
@@ -139,7 +138,6 @@ public class Sword : MonoBehaviour
         }
         else if (equipped && slash2 && !slash3)
         {
-            playerController?.Attacking();
             childAnimator.SetTrigger("2");
             slash2 = false;
             attackOnCooldown = true;
@@ -239,7 +237,6 @@ public class Sword : MonoBehaviour
 
     public void Slash3()
     {
-        playerController?.AttackingFinished();
         slash3 = true;
         attackOnCooldown = false;
         StartCoroutine(ResetSlash3());
@@ -275,7 +272,6 @@ public class Sword : MonoBehaviour
         parry = false;
         isParrying = true;
         childAnimator.SetTrigger("Parry2");
-        playerController?.Parrying();
         RestartParryCooldown();
         RestartSaveCooldown();
         SwordHitbox?.ParryHitbox();
@@ -298,7 +294,6 @@ public class Sword : MonoBehaviour
     public void FinishParry()
     {
         isParrying = false;
-        playerController?.ParryEnd();
         SwordHitbox?.ParryHitboxEnd();
     }
 
