@@ -125,10 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9e62a3ed05c9c34f8e787fdad51432f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FearEnemy
-  activationDistance: 30
-  firstTeleportDistance: 15
-  secondTeleportDistance: 5
-  attackDistance: 2
+  activationDistance: 20
+  firstTeleportDistance: 3
+  secondTeleportDistance: 2
+  attackDistance: 1
   timeBetweenTeleports: 2
   portalFrontDistance: -0.5
   canTeleport: 1

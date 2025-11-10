@@ -264,6 +264,11 @@ public class PlayerController : MonoBehaviour
         return isDashing;
     }
 
+    public Vector3 GetVelocity()
+    {
+        return controller.velocity;
+    }
+
     public void Teleport(Vector3 position, Quaternion rotation)
     {
         transform.position = position;
