@@ -10,7 +10,8 @@ public class FearEnemy : MonoBehaviour
     [SerializeField] private float secondTeleportDistance = 7f;
     [SerializeField] private float attackDistance = 3f;
     [SerializeField] private float timeBetweenTeleports = 2f;
-    [SerializeField] private float portalBehindDistance = 2f;
+    [SerializeField] private float portalFrontDistance = 2f;
+    [SerializeField] private bool canTeleport = true;
 
     [Header("References")]
     [SerializeField] private Renderer[] graphics;
@@ -21,10 +22,12 @@ public class FearEnemy : MonoBehaviour
     private bool isActivated = false;
     private Animator animator;
     private GameObject currentPortal;
+    private Transform mainCamera;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        mainCamera = Camera.main.transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
 
@@ -53,7 +56,11 @@ public class FearEnemy : MonoBehaviour
     {
         isActivated = true;
         CreatePortal(transform.position);
-        StartCoroutine(TeleportAttackSequence());
+
+        if (canTeleport)
+        {
+            StartCoroutine(TeleportAttackSequence());
+        }
     }
 
     private IEnumerator TeleportAttackSequence()
@@ -91,8 +98,7 @@ public class FearEnemy : MonoBehaviour
     {
         if (player == null) return;
 
-        Vector3 directionFromPlayer = (transform.position - player.position).normalized;
-        Vector3 targetPosition = player.position + directionFromPlayer * attackDistance;
+        Vector3 targetPosition = player.position - player.forward * attackDistance;
 
         if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
         {
@@ -105,6 +111,7 @@ public class FearEnemy : MonoBehaviour
             Teleport(targetPosition);
         }
 
+        transform.LookAt(player);
         SetVisibility(true);
 
         if (animator != null)
@@ -123,11 +130,6 @@ public class FearEnemy : MonoBehaviour
         if (navMeshAgent != null)
         {
             navMeshAgent.enabled = true;
-        }
-
-        if (player != null)
-        {
-            transform.LookAt(player.position);
         }
     }
 
@@ -149,15 +151,11 @@ public class FearEnemy : MonoBehaviour
         if (portalPrefab != null)
         {
             Vector3 portalPosition = enemyTeleportPosition;
-            Quaternion portalRotation = Quaternion.identity;
+            Quaternion portalRotation = transform.rotation;
 
             if (player != null)
             {
-                Vector3 directionFromPlayer = (enemyTeleportPosition - player.position).normalized;
-                
-                portalPosition = enemyTeleportPosition + directionFromPlayer * portalBehindDistance;
-                
-                portalRotation = Quaternion.LookRotation(player.position - portalPosition);
+                portalPosition = enemyTeleportPosition - transform.forward * portalFrontDistance;
             }
             
             currentPortal = Instantiate(portalPrefab, portalPosition, portalRotation);

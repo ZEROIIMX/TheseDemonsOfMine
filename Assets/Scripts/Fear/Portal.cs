@@ -3,6 +3,12 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     [SerializeField] Transform destination;
+    [SerializeField] private float spawnHeight = 1.0f;
+
+    private void Start()
+    {
+        transform.position = new Vector3(transform.position.x, spawnHeight, transform.position.z);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
