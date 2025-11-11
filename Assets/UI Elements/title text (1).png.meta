@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 23f996c72bcdf514f927031e23a4c5de
+guid: 973587be43142884a98895ce951a0367
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 400
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -98,7 +98,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main page krusidull_0
+      name: title text (1)_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1500
-        width: 1500
-        height: 1500
+        y: 1920
+        width: 2880
+        height: 1920
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8103ac1d3ed8c704bac0fab9136fdd3e
-      internalID: -1809097323
+      spriteID: 0c019f86876f15c41becaabd571d1274
+      internalID: -909251040
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main page krusidull_1
+      name: title text (1)_1
       rect:
         serializedVersion: 2
-        x: 1500
-        y: 1500
-        width: 1500
-        height: 1500
+        x: 2880
+        y: 1920
+        width: 2880
+        height: 1920
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,42 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9cf4577f803b76d4887d9a5189d974f9
-      internalID: -120695739
+      spriteID: 6de5ea41bd0c03c4fbdbb2a90e8b0219
+      internalID: -154619770
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main page krusidull_2
-      rect:
-        serializedVersion: 2
-        x: 3000
-        y: 1500
-        width: 1500
-        height: 1500
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a16e0bfef11b09e49905d156d81a7c59
-      internalID: -1026961475
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: main page krusidull_3
+      name: title text (1)_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1500
-        height: 1500
+        width: 2880
+        height: 1920
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,30 +169,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c53eea178d3ceb4691a44a264f158af
-      internalID: 1009287924
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: main page krusidull_4
-      rect:
-        serializedVersion: 2
-        x: 1500
-        y: 0
-        width: 1500
-        height: 1500
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7abd5c255662df14db979815cbc717e2
-      internalID: -2138650045
+      spriteID: f3fd15d65db7e1a49943901e21a5059f
+      internalID: 519501529
       vertices: []
       indices: 
       edges: []
@@ -223,7 +179,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 86c66cabb1023994c8358ab088e02528
+    spriteID: 5df5bb7af59ab774ebd2039c22c8675f
     internalID: 0
     vertices: []
     indices: 
@@ -233,13 +189,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":1500.0,"y":1500.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":2.0},"gridSpriteSize":{"x":2880.0,"y":1920.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      main page krusidull_0: -1809097323
-      main page krusidull_1: -120695739
-      main page krusidull_2: -1026961475
-      main page krusidull_3: 1009287924
-      main page krusidull_4: -2138650045
+      title text (1)_0: -909251040
+      title text (1)_1: -154619770
+      title text (1)_2: 519501529
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
