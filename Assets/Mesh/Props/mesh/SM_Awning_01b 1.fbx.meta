@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 356c178addcaa38409a566a5898e97ad
+guid: da33ef62512dbc8468289c35b8035a2e
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: bush_03
-    second: {fileID: 2100000, guid: 9dc2a801729c2d14994e90fcb9be7b9d, type: 2}
+      name: lambert1
+    second: {fileID: 2100000, guid: 59024c8fc48709b4d91eab6dea526b09, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -40,7 +40,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
