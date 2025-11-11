@@ -3,7 +3,17 @@ guid: 7e95bd049d63f3f4a8962f92964cd34e
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Building_DarkGrey
+    second: {fileID: 2100000, guid: 9c8f52ffe675f7f4a80ea631afdb0150, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 5dde5929a0439bf4aa72d079bdf3542b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
