@@ -132,9 +132,14 @@ MonoBehaviour:
   timeBetweenTeleports: 2
   portalFrontDistance: -0.5
   canTeleport: 1
+  portalLifetime: 1.5
+  portalSideOffset: 3
+  finalPortalScale: 2
   graphics:
   - {fileID: 2338347262307537485}
   portalPrefab: {fileID: 0}
+  scythePrefab: {fileID: 0}
+  scytheLifetime: 2
 --- !u!195 &-8920167601387427992
 NavMeshAgent:
   m_ObjectHideFlags: 0

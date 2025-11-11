@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class FearEnemy : MonoBehaviour
 {
@@ -12,18 +13,24 @@ public class FearEnemy : MonoBehaviour
     [SerializeField] private float timeBetweenTeleports = 2f;
     [SerializeField] private float portalFrontDistance = 2f;
     [SerializeField] private bool canTeleport = true;
+    [SerializeField] private float portalLifetime = 1.5f;
+    [SerializeField] private float portalSideOffset = 5f;
+    [SerializeField] private float finalPortalScale = 2f;
 
     [Header("References")]
     [SerializeField] private Renderer[] graphics;
     [SerializeField] private GameObject portalPrefab;
+    [SerializeField] private GameObject scythePrefab;
+    [SerializeField] private float scytheLifetime = 2f;
 
     private Transform player;
     private NavMeshAgent navMeshAgent;
     private bool isActivated = false;
     private Animator animator;
-    private GameObject currentPortal;
+    private List<GameObject> activePortals = new List<GameObject>();
     private Transform mainCamera;
     private PlayerController playerController;
+    private int teleportIndex = 0;
 
     private Vector3 offset = new Vector3(0.5f, 0f, 0f);
 
@@ -46,6 +53,18 @@ public class FearEnemy : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        foreach (var portal in activePortals)
+        {
+            if (portal != null)
+            {
+                Destroy(portal);
+            }
+        }
+        activePortals.Clear();
+    }
+
     private void Update()
     {
         if (isActivated || player == null)
@@ -62,7 +81,7 @@ public class FearEnemy : MonoBehaviour
     private void Activate()
     {
         isActivated = true;
-        CreatePortal(transform.position);
+        CreatePortal(transform.position, 1f);
 
         if (canTeleport)
         {
@@ -72,13 +91,18 @@ public class FearEnemy : MonoBehaviour
 
     private IEnumerator TeleportAttackSequence()
     {
+        teleportIndex = 0;
+
         yield return new WaitForSeconds(timeBetweenTeleports);
+        teleportIndex++;
         TeleportTowardsPlayer(firstTeleportDistance);
 
         yield return new WaitForSeconds(timeBetweenTeleports);
+        teleportIndex++;
         TeleportTowardsPlayer(secondTeleportDistance);
 
         yield return new WaitForSeconds(timeBetweenTeleports);
+        teleportIndex++;
         TeleportAndAttack();
     }
 
@@ -105,12 +129,12 @@ public class FearEnemy : MonoBehaviour
 
         if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
         {
-            CreatePortal(hit.position);
+            CreatePortal(hit.position, 1f);
             Teleport(hit.position);
         }
         else
         {
-            CreatePortal(targetPosition);
+            CreatePortal(targetPosition, 1f);
             Teleport(targetPosition);
         }
     }
@@ -120,26 +144,47 @@ public class FearEnemy : MonoBehaviour
         if (player == null) return;
 
         Vector3 predictedPlayerPosition = GetPlayerPredictedPosition();
-        Vector3 targetPosition = predictedPlayerPosition - new Vector3(1.0f,0.0f,0.0f) * attackDistance;
+        Vector3 targetPosition = predictedPlayerPosition - new Vector3(1.0f, 0.0f, 0.0f) * attackDistance;
+        Vector3 finalPosition;
 
         if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
         {
-            CreatePortal(hit.position);
-            Teleport(hit.position);
+            finalPosition = hit.position;
         }
         else
         {
-            CreatePortal(targetPosition);
-            Teleport(targetPosition);
+            finalPosition = targetPosition;
         }
 
-        transform.LookAt(player);
-        SetVisibility(true);
+        CreatePortal(finalPosition, finalPortalScale);
 
+        if (scythePrefab != null)
+        {
+            GameObject scytheInstance = Instantiate(scythePrefab, finalPosition, Quaternion.LookRotation(player.position - finalPosition));
+            
+            ScytheAttack scytheAttack = scytheInstance.GetComponent<ScytheAttack>();
+            if (scytheAttack != null)
+            {
+                scytheAttack.Spawner = this;
+            }
+
+            Destroy(scytheInstance, scytheLifetime);
+        }
+    }
+
+    public void OnScytheParried(Vector3 scythePosition)
+    {
+        Teleport(scythePosition);
+        SetVisibility(true);
         if (animator != null)
         {
             animator.SetTrigger("Attack");
         }
+    }
+
+    public void OnPlayerFailedParry()
+    {
+        Destroy(gameObject);
     }
 
     private void Teleport(Vector3 position)
@@ -163,24 +208,29 @@ public class FearEnemy : MonoBehaviour
         }
     }
 
-    private void CreatePortal(Vector3 enemyTeleportPosition)
+    private void CreatePortal(Vector3 enemyTeleportPosition, float scale)
     {
-        if (currentPortal != null)
-        {
-            Destroy(currentPortal);
-        }
-
         if (portalPrefab != null)
-        {   
+        {
             Vector3 portalPosition = enemyTeleportPosition;
             Quaternion portalRotation = transform.rotation;
 
             if (player != null)
             {
-                portalPosition = enemyTeleportPosition - transform.forward * portalFrontDistance;
+                if (teleportIndex == 1)
+                {
+                    portalPosition = GetPlayerPredictedPosition() + Vector3.forward * portalSideOffset;
+                }
+                else if (teleportIndex == 2)
+                { 
+                    portalPosition = GetPlayerPredictedPosition() - Vector3.forward * portalSideOffset;
+                }
             }
-            
-            currentPortal = Instantiate(portalPrefab, portalPosition, portalRotation);
+
+            GameObject newPortal = Instantiate(portalPrefab, portalPosition, portalRotation);
+            newPortal.transform.localScale *= scale;
+            activePortals.Add(newPortal);
+            Destroy(newPortal, portalLifetime);
         }
     }
 }

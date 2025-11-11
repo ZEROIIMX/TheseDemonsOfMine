@@ -4,6 +4,23 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] Transform destination;
     [SerializeField] private float spawnHeight = 1.0f;
+    [SerializeField] private ParticleSystem portalVFX;
+
+    private void OnEnable()
+    {
+        if (portalVFX != null)
+        {
+            portalVFX.Play();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (portalVFX != null)
+        {
+            portalVFX.Stop();
+        }
+    }
 
     private void Start()
     {
