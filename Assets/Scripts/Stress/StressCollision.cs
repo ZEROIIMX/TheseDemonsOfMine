@@ -106,7 +106,7 @@ public class StressCollision : MonoBehaviour
 
     IEnumerator DelayedResetCollision()
     {
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForSeconds(0.01f);
         RCollider.enabled = false;
         LCollider.enabled = false;
     }
