@@ -342,7 +342,7 @@ MonoBehaviour:
   isStruggling: 0
   isDead: 0
   rb: {fileID: 0}
-  damaged: 0
+  hitVFXPrefab: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
 --- !u!114 &6534908157413263691
 MonoBehaviour:
   m_ObjectHideFlags: 0

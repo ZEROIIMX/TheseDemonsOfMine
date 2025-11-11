@@ -209,8 +209,8 @@ public class Slime : MonoBehaviour
 
             if (!vfxSpawned && hitVFXPrefab != null)
             {
-                Instantiate(hitVFXPrefab, hitPoint, Quaternion.identity);
-                vfxSpawned = true;
+                GameObject vfx = Instantiate(hitVFXPrefab, hitPoint, Quaternion.identity);
+                Destroy(vfx, 1f);
             }
 
             rb.isKinematic = false;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class MultiplyEnemy : MonoBehaviour
 {
     [Header("Stats")]
-    public float Health;
+    public float Health = 100f;
 
     [Header("Behavior")]
     public float activationDistance = 25f;
@@ -15,6 +15,7 @@ public class MultiplyEnemy : MonoBehaviour
 
     [Header("Spawning")]
     public GameObject enemyCopyPrefab;
+    public GameObject spawnVFXPrefab;
     public int numberOfCopies = 8;
     public float spawnInterval = 1f;
     public float spawnRadius = 5f;
@@ -24,12 +25,16 @@ public class MultiplyEnemy : MonoBehaviour
     [Header("Death")]
     public float deathAnimationDuration;
 
+    [SerializeField] private GameObject hitVFXPrefab;
+    [SerializeField] private GameObject AuraVFX;
+
     private bool isDead;
     private bool isActivated = false;
     private bool trackingStarted = false;
     private bool wasCopy = false;
     private bool isTemporarilyStunned = false;
     private bool damaged = false;
+    private bool isLeader = false;
 
     private List<AIUnit> groupUnits = new List<AIUnit>();
     private Transform player;
@@ -37,13 +42,9 @@ public class MultiplyEnemy : MonoBehaviour
     private AIUnit selfAIUnit;
     private MultiplyEnemy leader;
     public Rigidbody rb;
-
     private CloseDamage closeDamage;
     private StressConnection stressConnection;
-
-    [SerializeField] private GameObject hitVFXPrefab;
-
-    private bool vfxSpawned = false;
+    private GameObject auraInstance;
 
     private void Awake()
     {
@@ -67,13 +68,18 @@ public class MultiplyEnemy : MonoBehaviour
     {
         player = AIManager.Instance.Target;
         if (player == null) enabled = false;
+
+        if (leader == null && !wasCopy)
+        {
+            isLeader = true;
+        }
     }
 
     private void Update()
     {
         if (isDead) return;
 
-        if (!isActivated && Vector3.Distance(transform.position, player.position) <= activationDistance)
+        if (!isActivated && isLeader && Vector3.Distance(transform.position, player.position) <= activationDistance)
         {
             Activate();
             return;
@@ -104,18 +110,26 @@ public class MultiplyEnemy : MonoBehaviour
 
     private void Activate()
     {
+        if (isActivated) return;
+
+        if (isLeader)
+        {
+            AddToGroup(selfAIUnit);
+            StartSpawningCopies();
+
+            if (AuraVFX != null && auraInstance == null)
+            {
+                Vector3 auraOffset = new Vector3(0, 1.5f, 0);
+                auraInstance = Instantiate(AuraVFX, transform.position + auraOffset, Quaternion.identity, transform);
+            }
+        }
+
         isActivated = true;
 
         if (selfAIUnit.Agent != null)
         {
             selfAIUnit.Agent.isStopped = false;
             selfAIUnit.Agent.speed = movementSpeed;
-        }
-
-        if (leader == null && !wasCopy)
-        {
-            AddToGroup(selfAIUnit);
-            StartSpawningCopies();
         }
     }
 
@@ -140,7 +154,11 @@ public class MultiplyEnemy : MonoBehaviour
         float totalSpawnTime = spawnDelay + (numberOfCopies * spawnInterval);
         yield return new WaitForSeconds(totalSpawnTime + trackingDelay);
 
-        // Start tracking for leader and all copies
+        if (isLeader && auraInstance != null)
+        {
+            Destroy(auraInstance);
+        }
+
         foreach (var unit in groupUnits)
         {
             MultiplyEnemy enemy = unit.GetComponent<MultiplyEnemy>();
@@ -180,6 +198,7 @@ public class MultiplyEnemy : MonoBehaviour
 
         if (copyEnemy != null)
         {
+            copyEnemy.Health = 100f;
             copyEnemy.SetLeader(this);
         }
 
@@ -194,16 +213,13 @@ public class MultiplyEnemy : MonoBehaviour
     {
         leader = leaderInstance;
         wasCopy = true;
-    }
 
-    public void StartTrackingAnimation()
-    {
-        m_animator?.SetBool("Run", true);
-    }
-
-    public void RemoveUnitFromGroup(AIUnit unit)
-    {
-        if (groupUnits.Contains(unit)) groupUnits.Remove(unit);
+        if (spawnVFXPrefab != null)
+        {
+            Vector3 spawnPosition = transform.position + new Vector3(0, 1f, 0);
+            GameObject vfx = Instantiate(spawnVFXPrefab, spawnPosition, Quaternion.identity);
+            Destroy(vfx, 2f);
+        }
     }
 
     public void TakeDamage(int damageAmount, Vector3 hitPoint)
@@ -212,8 +228,6 @@ public class MultiplyEnemy : MonoBehaviour
         if (!damaged)
         {
             damaged = true;
-            vfxSpawned = false;
-            if (!isActivated) Activate();
 
             stressConnection?.A1OFF();
             stressConnection?.A2OFF();
@@ -224,10 +238,10 @@ public class MultiplyEnemy : MonoBehaviour
             m_animator?.SetBool("Run", false);
             m_animator?.SetTrigger("OnHit");
 
-            if (!vfxSpawned && hitVFXPrefab != null)
+            if (hitVFXPrefab != null)
             {
-                Instantiate(hitVFXPrefab, hitPoint, Quaternion.identity);
-                vfxSpawned = true;
+                GameObject vfx = Instantiate(hitVFXPrefab, hitPoint, Quaternion.identity);
+                Destroy(vfx, 1f);
             }
 
             if (rb != null)
@@ -263,7 +277,7 @@ public class MultiplyEnemy : MonoBehaviour
     public void ResumeTracking()
     {
         isTemporarilyStunned = false;
-        m_animator.SetBool("Run", true); 
+        m_animator.SetBool("Run", true);
     }
 
     public void TakeForce()
@@ -293,4 +307,12 @@ public class MultiplyEnemy : MonoBehaviour
             groupUnits.Add(unit);
         }
     }
+    public void RemoveUnitFromGroup(AIUnit unit)
+    {
+        if (groupUnits.Contains(unit))
+        {
+            groupUnits.Remove(unit);
+        }
+    }
+
 }

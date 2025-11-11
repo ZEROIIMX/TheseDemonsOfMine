@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 4643643428092657449}
   - component: {fileID: 2860390876238295509}
   - component: {fileID: 2055571736801791060}
-  - component: {fileID: 1240030154414673330}
+  - component: {fileID: 4083310072915900102}
   m_Layer: 8
-  m_Name: StressParent
+  m_Name: Copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +137,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &1240030154414673330
+--- !u!114 &4083310072915900102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,8 +153,8 @@ MonoBehaviour:
   activationDistance: 8.5
   rotationSpeed: 10
   movementSpeed: 10
-  enemyCopyPrefab: {fileID: 879069621304188504, guid: c9447a38e1c5aa34cb3a67be11652494, type: 3}
-  spawnVFXPrefab: {fileID: 0}
+  enemyCopyPrefab: {fileID: 0}
+  spawnVFXPrefab: {fileID: 9080140021571130472, guid: e5e11732f39ee5b4aadddbd65793543b, type: 3}
   numberOfCopies: 8
   spawnInterval: 0.2
   spawnRadius: 3.5
@@ -162,7 +162,7 @@ MonoBehaviour:
   trackingDelay: 0.5
   deathAnimationDuration: 1
   hitVFXPrefab: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
-  AuraVFX: {fileID: 7314526620251459061, guid: ccf28ea29cf499744ac31bab90073aba, type: 3}
+  AuraVFX: {fileID: 0}
   rb: {fileID: 0}
 --- !u!1 &2925087649850575058
 GameObject:
