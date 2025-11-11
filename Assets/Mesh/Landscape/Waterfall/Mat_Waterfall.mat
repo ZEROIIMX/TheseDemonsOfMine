@@ -38,11 +38,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _FoamStrength: 2
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Voronoi_Speed: 2
+    - _Ripple_Amount: 4
+    - _Voronoi_Scale: 12
+    - _Voronoi_Speed: 4
     m_Colors:
-    - _Ripple_Speed: {r: 0, g: 0, b: 0, a: 0}
+    - _Ripple_Color: {r: 0.2528302, g: 0.2528302, b: 0.2528302, a: 1}
+    - _Ripple_Speed: {r: 0, g: 0.2, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &670655397857711590
