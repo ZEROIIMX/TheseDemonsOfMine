@@ -41,6 +41,10 @@ public class MultiplyEnemy : MonoBehaviour
     private CloseDamage closeDamage;
     private StressConnection stressConnection;
 
+    [SerializeField] private GameObject hitVFXPrefab;
+
+    private bool vfxSpawned = false;
+
     private void Awake()
     {
         stressConnection = GetComponent<StressConnection>();
@@ -202,12 +206,13 @@ public class MultiplyEnemy : MonoBehaviour
         if (groupUnits.Contains(unit)) groupUnits.Remove(unit);
     }
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount, Vector3 hitPoint)
     {
         if (isDead || !trackingStarted) return;
         if (!damaged)
         {
             damaged = true;
+            vfxSpawned = false;
             if (!isActivated) Activate();
 
             stressConnection?.A1OFF();
@@ -218,6 +223,12 @@ public class MultiplyEnemy : MonoBehaviour
             isTemporarilyStunned = true;
             m_animator?.SetBool("Run", false);
             m_animator?.SetTrigger("OnHit");
+
+            if (!vfxSpawned && hitVFXPrefab != null)
+            {
+                Instantiate(hitVFXPrefab, hitPoint, Quaternion.identity);
+                vfxSpawned = true;
+            }
 
             if (rb != null)
             {
@@ -231,6 +242,7 @@ public class MultiplyEnemy : MonoBehaviour
             {
                 isDead = true;
                 m_animator?.SetTrigger("Death");
+                closeDamage?.Dead();
 
                 if (selfAIUnit?.Agent != null) selfAIUnit.Agent.enabled = false;
                 Collider col = GetComponent<Collider>();
@@ -244,7 +256,7 @@ public class MultiplyEnemy : MonoBehaviour
 
     IEnumerator DamageCooldown()
     {
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(0.2f);
         damaged = false;
     }
 

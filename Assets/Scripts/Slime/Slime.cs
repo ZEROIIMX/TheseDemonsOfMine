@@ -41,6 +41,9 @@ public class Slime : MonoBehaviour
 
     private bool Upgrade2= false;
 
+    [SerializeField] private GameObject hitVFXPrefab;
+
+    private bool vfxSpawned = false;
 
     private void Start()
     {
@@ -190,11 +193,12 @@ public class Slime : MonoBehaviour
         scalingCoroutine = null;
     }
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount, Vector3 hitPoint)
     {
         if (!damaged)
         {
             damaged = true;
+            vfxSpawned = false;
             slimeConnection?.GrabOff();
             slimeConnection?.RPunchOff();
             slimeConnection?.LPunchOff();
@@ -202,10 +206,16 @@ public class Slime : MonoBehaviour
             Health -= damageAmount;
             m_animator.SetTrigger("OnHit");
             Debug.Log(Health);
+
+            if (!vfxSpawned && hitVFXPrefab != null)
+            {
+                Instantiate(hitVFXPrefab, hitPoint, Quaternion.identity);
+                vfxSpawned = true;
+            }
+
             rb.isKinematic = false;
             rb.constraints = RigidbodyConstraints.None;
             StartCoroutine(DamageCooldown());
-            Debug.Log("Slime Health: " + Health);
 
             if (Health <= 0)
             {
@@ -217,7 +227,7 @@ public class Slime : MonoBehaviour
 
     IEnumerator DamageCooldown()
     {
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(0.2f);
         damaged = false;
     }
 

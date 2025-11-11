@@ -11,6 +11,8 @@ public class CloseDamage : MonoBehaviour
 
     private Animator m_animator;
 
+    private bool dead = false;
+
     void Start()
     {
         m_animator = GetComponentInChildren<Animator>();
@@ -24,7 +26,7 @@ public class CloseDamage : MonoBehaviour
 
         cooldownTimer -= Time.deltaTime;
 
-        if (cooldownTimer <= 0)
+        if (cooldownTimer <= 0 && !dead)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= attackDistance)
@@ -67,6 +69,11 @@ public class CloseDamage : MonoBehaviour
     private void A3()
     {
         m_animator.SetTrigger("3");
+    }
+
+    public void Dead()
+    { 
+    dead = true;
     }
 }
 

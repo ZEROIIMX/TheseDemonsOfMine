@@ -41,7 +41,8 @@ public class SwordHitbox : MonoBehaviour
         {
             if (!parry)
             {
-                slimeHealth.TakeDamage(damageAmount);
+                Vector3 hitPoint = collision.contacts[0].point;
+                slimeHealth.TakeDamage(damageAmount, hitPoint);
             }
             if (slimeHealth.rb != null)
             {
@@ -55,8 +56,9 @@ public class SwordHitbox : MonoBehaviour
         if (multiplyEnemy != null)
         {
             if (!parry)
-            { 
-            multiplyEnemy.TakeDamage(damageAmount);
+            {
+                Vector3 hitPoint = collision.contacts[0].point;
+                multiplyEnemy.TakeDamage(damageAmount, hitPoint);
             }
             if (multiplyEnemy.rb != null)
             {

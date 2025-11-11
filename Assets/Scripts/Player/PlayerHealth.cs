@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,22 +11,41 @@ public class PlayerHealth : MonoBehaviour
     [Header("UI Health Bar")]
     [SerializeField] private Transform healthBarTransform; // This should be the fill sprite's transform
 
+    private bool damaged = false;
+
+    private DamageFlash damageFlash;
+
     void Start()
     {
+        damageFlash = GetComponentInChildren<DamageFlash>();
         currentHealth = maxHealth;
         UpdateHealthBar();
+        damageFlash?.HealthUpdate(currentHealth);
+
     }
 
     public void TakeDamage(float damage)
     {
-        currentHealth = Mathf.Clamp(currentHealth - damage, 0f, maxHealth);
-        UpdateHealthBar();
-        Debug.Log("Player Health: " + currentHealth);
-
-        if (currentHealth <= 0)
+        if (!damaged)
         {
-            SceneManager.LoadScene("GameOverScreen");
+            damaged = true;
+            currentHealth = Mathf.Clamp(currentHealth - damage, 0f, maxHealth);
+            damageFlash?.Flash(currentHealth);
+            UpdateHealthBar();
+            Debug.Log("Player Health: " + currentHealth);
+            StartCoroutine(DamageCooldown());
+
+            if (currentHealth <= 0)
+            {
+                SceneManager.LoadScene("GameOverScreen");
+            }
         }
+    }
+
+    IEnumerator DamageCooldown()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
+        damaged = false;
     }
 
     private void UpdateHealthBar()

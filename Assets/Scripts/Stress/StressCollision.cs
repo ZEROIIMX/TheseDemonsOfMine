@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class StressCollision : MonoBehaviour
@@ -49,6 +50,7 @@ public class StressCollision : MonoBehaviour
                 if (playerHealth != null)
                 {
                     playerHealth.TakeDamage(damage);
+                    Collision();
                 }
             }
         }
@@ -95,5 +97,17 @@ public class StressCollision : MonoBehaviour
         RTrigger.enabled = false;
         LCollider.enabled = false;
         LTrigger.enabled = false;
+    }
+
+    private void Collision()
+    {
+        StartCoroutine(DelayedResetCollision());
+    }
+
+    IEnumerator DelayedResetCollision()
+    {
+        yield return new WaitForSeconds(0.02f);
+        RCollider.enabled = false;
+        LCollider.enabled = false;
     }
 }
