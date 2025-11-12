@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3c0ea6c2ab5bdc946a2b34f90e2eb63e
+guid: 7d25e7e0e22e75b44b081e5fe1608f0b
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -55,7 +55,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.98255813
+      - time: 0.98154986
         functionName: SlimeDie
         data: 
         objectReferenceParameter: {instanceID: 0}

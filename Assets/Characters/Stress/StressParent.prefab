@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 2690592928281143802}
   - component: {fileID: 6480371049286085849}
   - component: {fileID: 1686838337480629865}
-  - component: {fileID: 8498897078206649694}
   - component: {fileID: 4643643428092657449}
   - component: {fileID: 2860390876238295509}
   - component: {fileID: 2055571736801791060}
+  - component: {fileID: 1240030154414673330}
   m_Layer: 8
   m_Name: StressParent
   m_TagString: Untagged
@@ -73,30 +73,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIUnit
   Agent: {fileID: 0}
---- !u!114 &8498897078206649694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879069621304188504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39191ef7208e3de4889f09434faee33e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MultiplyEnemy
-  Health: 100
-  activationDistance: 7
-  rotationSpeed: 10
-  movementSpeed: 10
-  enemyCopyPrefab: {fileID: 879069621304188504}
-  numberOfCopies: 8
-  spawnInterval: 0.2
-  spawnRadius: 3.5
-  spawnDelay: 0.5
-  trackingDelay: 0.5
-  deathAnimationDuration: 1
-  rb: {fileID: 0}
 --- !u!114 &4643643428092657449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CloseDamage
   attackDistance: 3
-  attackCooldown: 2
+  attackCooldown: 1.5
 --- !u!136 &2860390876238295509
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -161,6 +137,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1240030154414673330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879069621304188504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39191ef7208e3de4889f09434faee33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiplyEnemy
+  Health: 100
+  activationDistance: 8.5
+  rotationSpeed: 10
+  movementSpeed: 10
+  enemyCopyPrefab: {fileID: 879069621304188504, guid: c9447a38e1c5aa34cb3a67be11652494, type: 3}
+  spawnVFXPrefab: {fileID: 9080140021571130472, guid: e5e11732f39ee5b4aadddbd65793543b, type: 3}
+  numberOfCopies: 8
+  spawnInterval: 0.2
+  spawnRadius: 3.5
+  spawnDelay: 0.5
+  trackingDelay: 0.5
+  deathAnimationDuration: 1
+  hitVFXPrefab: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
+  AuraVFX: {fileID: 7314526620251459061, guid: ccf28ea29cf499744ac31bab90073aba, type: 3}
+  rb: {fileID: 0}
 --- !u!1 &2925087649850575058
 GameObject:
   m_ObjectHideFlags: 0

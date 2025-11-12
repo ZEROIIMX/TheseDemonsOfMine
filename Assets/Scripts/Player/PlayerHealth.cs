@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking.PlayerConnection;
 using UnityEngine.SceneManagement;
 
 
@@ -15,8 +16,17 @@ public class PlayerHealth : MonoBehaviour
 
     private DamageFlash damageFlash;
 
+    private ParentConnection parentConnection;
+
+    private PlayerController playerController;
+
+    private Sword playerSword;
+
     void Start()
     {
+        playerSword = GetComponent<Sword>();
+        playerController = GetComponent<PlayerController>();
+        parentConnection = GetComponentInChildren<ParentConnection>();
         damageFlash = GetComponentInChildren<DamageFlash>();
         currentHealth = maxHealth;
         UpdateHealthBar();
@@ -37,7 +47,9 @@ public class PlayerHealth : MonoBehaviour
 
             if (currentHealth <= 0)
             {
-                SceneManager.LoadScene("GameOverScreen");
+                parentConnection?.Death();
+                playerController?.DisableControls();
+                playerSword?.DisableSword();
             }
         }
     }
