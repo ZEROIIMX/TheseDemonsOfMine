@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 899ed436df62ffe49801b4a866f9bbdd
+guid: ae62fafc599ecac42b9cee7d37305165
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bg sheet_0
+      name: main menu illust_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1500
-        width: 1500
-        height: 1500
+        y: 2560
+        width: 3840
+        height: 2560
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8919fd0a9c7ae764e95959eba3cd4d98
-      internalID: 2012924925
+      spriteID: 0c3514bfbdf33d24d82d7a4474e422a4
+      internalID: 697998189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bg sheet_1
+      name: main menu illust_1
       rect:
         serializedVersion: 2
-        x: 1500
-        y: 1500
-        width: 1500
-        height: 1500
+        x: 3840
+        y: 2560
+        width: 3840
+        height: 2560
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,20 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0187853b6a713904d9c12bb30d78283b
-      internalID: -1321409193
+      spriteID: 57ceb9f6c1a07c246ab3cf4c50d449f1
+      internalID: 885607270
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bg sheet_2
+      name: main menu illust_2
       rect:
         serializedVersion: 2
-        x: 3000
-        y: 1500
-        width: 1500
-        height: 1500
+        x: 7680
+        y: 2560
+        width: 3840
+        height: 2560
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,20 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f61784dc48fe80946bbaadc11a85acb5
-      internalID: -1641353528
+      spriteID: fafbe5826a4f20143b9b68a98388cd1b
+      internalID: -153443406
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bg sheet_3
+      name: main menu illust_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1500
-        height: 1500
+        width: 3840
+        height: 2560
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,20 +178,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6d0f689697f0f449a34c25064ff3cc0
-      internalID: 1616013018
+      spriteID: e93e02923d09b664aa4f765cb4d1c25e
+      internalID: -598535564
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bg sheet_4
+      name: main menu illust_4
       rect:
         serializedVersion: 2
-        x: 1500
+        x: 3840
         y: 0
-        width: 1500
-        height: 1500
+        width: 3840
+        height: 2560
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd2d4a2b8d38d544fb465e302f3c87d8
-      internalID: 1828897282
+      spriteID: 751eaab53dae5b647b82ccc740de80f6
+      internalID: -376066521
       vertices: []
       indices: 
       edges: []
@@ -210,7 +210,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d66c824218c4b094f954ceab260d6d82
+    spriteID: bb217fb56fcd0344fa7ecf23299dc357
     internalID: 0
     vertices: []
     indices: 
@@ -220,13 +220,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1500.0,"y":1500.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":3840.0,"y":2560.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      bg sheet_0: 2012924925
-      bg sheet_1: -1321409193
-      bg sheet_2: -1641353528
-      bg sheet_3: 1616013018
-      bg sheet_4: 1828897282
+      main menu illust_0: 697998189
+      main menu illust_1: 885607270
+      main menu illust_2: -153443406
+      main menu illust_3: -598535564
+      main menu illust_4: -376066521
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
