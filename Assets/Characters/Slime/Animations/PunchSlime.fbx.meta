@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 043f77d75f414f044ac56e1f2af168f5
+guid: 1b08d1e2f7e44ee4bbb6c4b8f26dcd8a
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -55,28 +55,28 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.22485209
+      - time: 0.22878228
         functionName: LPunchOn
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.44970417
+      - time: 0.45387453
         functionName: LPunchOff
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5977388
+      - time: 0.601476
         functionName: RPunchOn
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.7218935
+      - time: 0.72539175
         functionName: RPunchOff
         data: 
         objectReferenceParameter: {instanceID: 0}
