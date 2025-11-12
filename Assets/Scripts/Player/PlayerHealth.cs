@@ -18,8 +18,14 @@ public class PlayerHealth : MonoBehaviour
 
     private ParentConnection parentConnection;
 
+    private PlayerController playerController;
+
+    private Sword playerSword;
+
     void Start()
     {
+        playerSword = GetComponent<Sword>();
+        playerController = GetComponent<PlayerController>();
         parentConnection = GetComponentInChildren<ParentConnection>();
         damageFlash = GetComponentInChildren<DamageFlash>();
         currentHealth = maxHealth;
@@ -42,6 +48,8 @@ public class PlayerHealth : MonoBehaviour
             if (currentHealth <= 0)
             {
                 parentConnection?.Death();
+                playerController?.DisableControls();
+                playerSword?.DisableSword();
             }
         }
     }

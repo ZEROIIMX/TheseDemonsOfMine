@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float worldBottomBounndary = -100f;
     (Vector3, Quaternion) initialPositionAndRotation;
 
+    private bool isDead = false;    
+
     public void UseUnscaledTime(bool value)
     {
         useUnscaledTime = value;
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
         float delta = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
 
         if (isMoveHeld)
@@ -159,6 +162,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (isDead)
+            return;
+
         if (context.canceled)
         {
             isMoveHeld = false;
@@ -184,6 +190,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (isDead)
+            return;
+
         if (context.started)
         {
             isJumpHeld = true;
@@ -205,6 +214,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if (isDead)
+            return;
+
         if (context.started)
         {
             isDashHeld = true;
@@ -285,5 +297,10 @@ public class PlayerController : MonoBehaviour
             var (position, rotation) = initialPositionAndRotation;
             Teleport(position, rotation);
         }
+    }
+
+    public void DisableControls()
+    {
+        isDead = true;
     }
 }
