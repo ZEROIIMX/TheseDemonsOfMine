@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -13,7 +14,9 @@ public class ScytheAttack : MonoBehaviour
     private void Start()
     {
         hitbox = GetComponentInChildren<Collider>();
-        hitbox.enabled = true;
+        hitbox.enabled = false;
+        StartCoroutine(HitboxCd());
+
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
@@ -23,15 +26,21 @@ public class ScytheAttack : MonoBehaviour
         GetComponent<Collider>().isTrigger = true;
     }
 
+    private IEnumerator HitboxCd()
+    {
+        yield return new WaitForSeconds(.05f);
+        hitbox.enabled = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (((1 << other.gameObject.layer) & targetLayer) == 0) return;
 
-        if (playerSword.IsParrying())
+        if (playerSword.IsParrying() && !playerSword.isDead)
         {
             hitbox.enabled = false;
-            Spawner?.OnParried(transform.position);
             Destroy(gameObject);
+            Spawner?.OnParried(transform.position);
         }
         else
         {

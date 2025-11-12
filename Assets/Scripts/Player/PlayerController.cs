@@ -37,6 +37,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 look = Vector2.zero;
     [SerializeField] float worldBottomBounndary = -100f;
     (Vector3, Quaternion) initialPositionAndRotation;
+<<<<<<< Updated upstream
+=======
+
+    private bool isDead = false;    
+
+>>>>>>> Stashed changes
     public void UseUnscaledTime(bool value)
     {
         useUnscaledTime = value;
@@ -51,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
         float delta = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
 
         isGrounded = controller.isGrounded;
@@ -97,15 +104,49 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+<<<<<<< Updated upstream
         if (isRootMotionActive) return;
         Vector2 input = context.ReadValue<Vector2>();
         moveInput = new Vector3(input.x, 0, input.y);
         isMoveHeld = context.performed;
+=======
+        if (isDead)
+            return;
+
+        if (context.canceled)
+        {
+            isMoveHeld = false;
+            latestMoveInput = Vector3.zero;
+            bufferedMoveInput = Vector3.zero;
+            moveInput = Vector3.zero;
+            return;
+        }
+
+        if (context.performed)
+        {
+            isMoveHeld = true;
+
+            Vector2 input = context.ReadValue<Vector2>();
+            float x = input.y;
+            float z = input.x;
+            Vector3 newInput = new Vector3(-x, 0, z);
+            latestMoveInput = newInput;
+            moveInput = newInput;
+            bufferedMoveInput = Vector3.zero;
+        }
+>>>>>>> Stashed changes
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+<<<<<<< Updated upstream
         if (context.performed)
+=======
+        if (isDead)
+            return;
+
+        if (context.started)
+>>>>>>> Stashed changes
         {
             isJumpHeld = true;
             if (isGrounded || (isTouchingWall && !hasWallJumped))
@@ -131,7 +172,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
+<<<<<<< Updated upstream
         if (context.performed && canDash && !isDashing)
+=======
+        if (isDead)
+            return;
+
+        if (context.started)
+>>>>>>> Stashed changes
         {
             isDashHeld = true;
             StartCoroutine(Dash(useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime));
@@ -210,5 +258,10 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.PlayerDied();
         }
+    }
+
+    public void DisableControls()
+    {
+        isDead = true;
     }
 }

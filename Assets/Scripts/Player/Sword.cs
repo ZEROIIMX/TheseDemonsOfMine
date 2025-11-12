@@ -51,6 +51,8 @@ public class Sword : MonoBehaviour
     public bool isParrying = false;
     public bool isHeld = false;
 
+    public bool isDead = false;
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -66,6 +68,8 @@ public class Sword : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+
         if (isParryHeld && parry && !isHeld)
         {
             if (!equipped)
@@ -112,7 +116,7 @@ public class Sword : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (!context.started || attackOnCooldown || childAnimator == null) return;
+        if (isDead || !context.started || attackOnCooldown || childAnimator == null) return;
 
         if (!equipped && isHeld)
         {
@@ -255,7 +259,7 @@ public class Sword : MonoBehaviour
 
     public void OnParry(InputAction.CallbackContext context)
     {
-        if (childAnimator == null) return;
+        if (isDead || childAnimator == null) return;
 
         if (context.started)
         {
@@ -269,6 +273,8 @@ public class Sword : MonoBehaviour
 
     public void Parry()
     {
+        if (isDead) return;
+
         parry = false;
         isParrying = true;
         childAnimator.SetTrigger("Parry2");
@@ -375,5 +381,10 @@ public class Sword : MonoBehaviour
         childAnimator.updateMode = AnimatorUpdateMode.Normal;
         playerController.UseUnscaledTime(false);
         isParryTimeActive = false;
+    }
+
+    public void DisableSword()
+    {
+        isDead = true;
     }
 }
