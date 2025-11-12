@@ -4,11 +4,16 @@ using UnityEngine;
 public class ScytheAttack : MonoBehaviour
 {
     private Sword playerSword;
-    private bool hasAttacked = false;
     public FearEnemy Spawner { get; set; }
+
+    public LayerMask targetLayer;
+
+    private Collider hitbox;
 
     private void Start()
     {
+        hitbox = GetComponentInChildren<Collider>();
+        hitbox.enabled = true;
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
@@ -20,21 +25,22 @@ public class ScytheAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasAttacked || !other.CompareTag("Player") || playerSword == null)
-        {
-            return;
-        }
+        if (((1 << other.gameObject.layer) & targetLayer) == 0) return;
 
-        hasAttacked = true;
-            if (playerSword.IsParrying())
+        if (playerSword.IsParrying())
         {
-            Spawner?.OnScytheParried(transform.position);
+            hitbox.enabled = false;
+            Spawner?.OnParried(transform.position);
             Destroy(gameObject);
         }
         else
         {
-            Destroy(other.gameObject);
-            Spawner?.OnPlayerFailedParry();
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(300);
+            }
+            Spawner?.OnFailedParry();
         }
     }
 }

@@ -154,7 +154,7 @@ MonoBehaviour:
   rotationSpeed: 10
   movementSpeed: 10
   enemyCopyPrefab: {fileID: 879069621304188504, guid: c9447a38e1c5aa34cb3a67be11652494, type: 3}
-  spawnVFXPrefab: {fileID: 0}
+  spawnVFXPrefab: {fileID: 9080140021571130472, guid: e5e11732f39ee5b4aadddbd65793543b, type: 3}
   numberOfCopies: 8
   spawnInterval: 0.2
   spawnRadius: 3.5

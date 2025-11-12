@@ -7,30 +7,27 @@ public class FearEnemy : MonoBehaviour
 {
     [Header("Behavior")]
     [SerializeField] private float activationDistance = 30f;
-    [SerializeField] private float firstTeleportDistance = 15f;
-    [SerializeField] private float secondTeleportDistance = 7f;
     [SerializeField] private float attackDistance = 3f;
     [SerializeField] private float timeBetweenTeleports = 2f;
-    [SerializeField] private float portalFrontDistance = 2f;
     [SerializeField] private bool canTeleport = true;
     [SerializeField] private float portalLifetime = 1.5f;
-    [SerializeField] private float portalSideOffset = 5f;
     [SerializeField] private float finalPortalScale = 2f;
+    private float randomPortalScale;
 
     [Header("References")]
-    [SerializeField] private Renderer[] graphics;
     [SerializeField] private GameObject portalPrefab;
     [SerializeField] private GameObject scythePrefab;
+    [SerializeField] private GameObject Fear;
     [SerializeField] private float scytheLifetime = 2f;
 
     private Transform player;
     private NavMeshAgent navMeshAgent;
     private bool isActivated = false;
-    private Animator animator;
     private List<GameObject> activePortals = new List<GameObject>();
-    private Transform mainCamera;
     private PlayerController playerController;
     private int teleportIndex = 0;
+
+    private bool isParriedOrFailed = false;
 
     private Vector3 offset = new Vector3(0.5f, 0f, 0f);
 
@@ -41,28 +38,13 @@ public class FearEnemy : MonoBehaviour
         {
             playerController = player.GetComponent<PlayerController>();
         }
-        mainCamera = Camera.main.transform;
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        animator = GetComponentInChildren<Animator>();
 
-        SetVisibility(false);
+        navMeshAgent = GetComponent<NavMeshAgent>();
 
         if (navMeshAgent != null)
         {
             navMeshAgent.enabled = false;
         }
-    }
-
-    private void OnDestroy()
-    {
-        foreach (var portal in activePortals)
-        {
-            if (portal != null)
-            {
-                Destroy(portal);
-            }
-        }
-        activePortals.Clear();
     }
 
     private void Update()
@@ -81,7 +63,6 @@ public class FearEnemy : MonoBehaviour
     private void Activate()
     {
         isActivated = true;
-        CreatePortal(transform.position, 1f);
 
         if (canTeleport)
         {
@@ -91,20 +72,31 @@ public class FearEnemy : MonoBehaviour
 
     private IEnumerator TeleportAttackSequence()
     {
-        teleportIndex = 0;
+        while (!isParriedOrFailed)
+        {
+            teleportIndex = 0;
 
-        yield return new WaitForSeconds(timeBetweenTeleports);
-        teleportIndex++;
-        TeleportTowardsPlayer(firstTeleportDistance);
+            yield return new WaitForSeconds(timeBetweenTeleports);
+            teleportIndex++;
+            TeleportTowardsPlayer1();
 
-        yield return new WaitForSeconds(timeBetweenTeleports);
-        teleportIndex++;
-        TeleportTowardsPlayer(secondTeleportDistance);
+            yield return new WaitForSeconds(timeBetweenTeleports);
+            teleportIndex++;
+            TeleportTowardsPlayer2();
 
-        yield return new WaitForSeconds(timeBetweenTeleports);
-        teleportIndex++;
-        TeleportAndAttack();
+            yield return new WaitForSeconds(timeBetweenTeleports);
+            teleportIndex++;
+            TeleportAndAttack();
+
+            yield return new WaitForSeconds(portalLifetime); // Wait for portal to disappear
+
+            if (!isParriedOrFailed)
+            {
+                timeBetweenTeleports = Mathf.Max(0.6f, timeBetweenTeleports - 0.2f);
+            }
+        }
     }
+
 
     private Vector3 GetPlayerPredictedPosition()
     {
@@ -115,7 +107,7 @@ public class FearEnemy : MonoBehaviour
         return player.position;
     }
 
-    private void TeleportTowardsPlayer(float distance)
+    private void TeleportTowardsPlayer1()
     {
         if (player == null) return;
 
@@ -125,17 +117,47 @@ public class FearEnemy : MonoBehaviour
         {
             directionToPlayer = new Vector3(-directionToPlayer.x, directionToPlayer.y, directionToPlayer.z);
         }
-        Vector3 targetPosition = predictedPlayerPosition + directionToPlayer * distance;
+
+        Vector3 targetPosition = predictedPlayerPosition +
+            Vector3.right * Random.Range(.5f, -2f) +   // global X offset
+            Vector3.up * Random.Range(1f, 5f) +        // global Y offset
+            Vector3.forward * Random.Range(-2f, -6f);  // global Z offset
+            randomPortalScale = Random.Range(.5f, 1f);
 
         if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
         {
-            CreatePortal(hit.position, 1f);
-            Teleport(hit.position);
+            CreatePortal(hit.position, randomPortalScale);
         }
         else
         {
-            CreatePortal(targetPosition, 1f);
-            Teleport(targetPosition);
+            CreatePortal(targetPosition, randomPortalScale);
+        }
+    }
+
+    private void TeleportTowardsPlayer2()
+    {
+        if (player == null) return;
+
+        Vector3 predictedPlayerPosition = GetPlayerPredictedPosition();
+        Vector3 directionToPlayer = (transform.position - predictedPlayerPosition).normalized;
+        if (transform.position.x - predictedPlayerPosition.x > 0)
+        {
+            directionToPlayer = new Vector3(-directionToPlayer.x, directionToPlayer.y, directionToPlayer.z);
+        }
+
+        Vector3 targetPosition = predictedPlayerPosition +
+            Vector3.right * Random.Range(.5f, -2f) +   // global X offset
+            Vector3.up * Random.Range(1f, 5f) +        // global Y offset
+            Vector3.forward * Random.Range(2f, 6f);  // global Z offset
+            randomPortalScale = Random.Range(1f, 1.5f);
+
+        if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 5.0f, NavMesh.AllAreas))
+        {
+            CreatePortal(hit.position, randomPortalScale);
+        }
+        else
+        {
+            CreatePortal(targetPosition, randomPortalScale);
         }
     }
 
@@ -158,10 +180,20 @@ public class FearEnemy : MonoBehaviour
 
         CreatePortal(finalPosition, finalPortalScale);
 
+        StartCoroutine(SpawnScytheWithDelay(finalPosition));
+
+    }
+
+    private IEnumerator SpawnScytheWithDelay(Vector3 finalPosition)
+    {
+        yield return new WaitForSeconds(0.2f);
+
         if (scythePrefab != null)
         {
-            GameObject scytheInstance = Instantiate(scythePrefab, finalPosition, Quaternion.LookRotation(player.position - finalPosition));
-            
+            Vector3 raisedPosition = finalPosition + Vector3.up * 1.5f;
+
+            GameObject scytheInstance = Instantiate(scythePrefab, raisedPosition, Quaternion.LookRotation(player.position - raisedPosition));
+
             ScytheAttack scytheAttack = scytheInstance.GetComponent<ScytheAttack>();
             if (scytheAttack != null)
             {
@@ -172,40 +204,24 @@ public class FearEnemy : MonoBehaviour
         }
     }
 
-    public void OnScytheParried(Vector3 scythePosition)
+    public void OnParried(Vector3 scythePosition)
     {
-        Teleport(scythePosition);
-        SetVisibility(true);
-        if (animator != null)
-        {
-            animator.SetTrigger("Attack");
-        }
+        isParriedOrFailed = true;
+        //Spawn enemy prefab
+        Vector3 raisedPosition = scythePosition + Vector3.up * 1.5f;
+        GameObject Fear = Instantiate(this.Fear, scythePosition + offset, Quaternion.LookRotation(player.position - raisedPosition));
     }
 
-    public void OnPlayerFailedParry()
+    public void OnFailedParry()
     {
+        isParriedOrFailed = true;
+        StartCoroutine(DelayedDestroy());
+    }
+
+    private IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
-    }
-
-    private void Teleport(Vector3 position)
-    {
-        if (navMeshAgent != null)
-        {
-            navMeshAgent.enabled = false;
-        }
-        transform.position = position;
-        if (navMeshAgent != null)
-        {
-            navMeshAgent.enabled = true;
-        }
-    }
-
-    private void SetVisibility(bool isVisible)
-    {
-        foreach (var renderer in graphics)
-        {
-            renderer.enabled = isVisible;
-        }
     }
 
     private void CreatePortal(Vector3 enemyTeleportPosition, float scale)
@@ -214,18 +230,6 @@ public class FearEnemy : MonoBehaviour
         {
             Vector3 portalPosition = enemyTeleportPosition;
             Quaternion portalRotation = transform.rotation;
-
-            if (player != null)
-            {
-                if (teleportIndex == 1)
-                {
-                    portalPosition = GetPlayerPredictedPosition() + Vector3.forward * portalSideOffset;
-                }
-                else if (teleportIndex == 2)
-                { 
-                    portalPosition = GetPlayerPredictedPosition() - Vector3.forward * portalSideOffset;
-                }
-            }
 
             GameObject newPortal = Instantiate(portalPrefab, portalPosition, portalRotation);
             newPortal.transform.localScale *= scale;

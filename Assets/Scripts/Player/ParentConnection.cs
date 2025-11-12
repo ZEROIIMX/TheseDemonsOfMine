@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ParentConnection : MonoBehaviour
 {
@@ -90,5 +91,15 @@ public class ParentConnection : MonoBehaviour
     public void S3Draw()
     { 
     animator?.SetTrigger("3");
+    }
+
+    public void Death()
+    {
+        animator?.SetTrigger("Death");
+    }
+
+    public void End()
+    {
+        SceneManager.LoadScene("GameOverScreen");
     }
 }
