@@ -100,6 +100,9 @@ public class ParentConnection : MonoBehaviour
 
     public void End()
     {
-        SceneManager.LoadScene("GameOverScreen");
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.PlayerDied();
+        }
     }
 }
