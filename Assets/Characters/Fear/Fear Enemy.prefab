@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8345435256610532732}
   - component: {fileID: 5125081627637537602}
   - component: {fileID: -8920167601387427992}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fear Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9e62a3ed05c9c34f8e787fdad51432f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FearEnemy
-  activationDistance: 5
+  activationDistance: 12
   attackDistance: 1.5
   timeBetweenTeleports: 1.5
   canTeleport: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
   finalPortalScale: 2
   portalPrefab: {fileID: 3118087145514759983, guid: 5d532c2958b4afa45839ff7f49909e8e, type: 3}
   scythePrefab: {fileID: 5233546524638055994, guid: 152536940de38d947889d85f1930703a, type: 3}
-  Fear: {fileID: 6565213589557057850, guid: 3ba76c1aec8b4c34eb129071b22512c2, type: 3}
+  Fear: {fileID: 879069621304188504, guid: a65939b4691c9af4cb99abef2008796e, type: 3}
   scytheLifetime: 0.62
 --- !u!195 &-8920167601387427992
 NavMeshAgent:

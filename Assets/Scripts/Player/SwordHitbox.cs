@@ -66,6 +66,22 @@ public class SwordHitbox : MonoBehaviour
                 multiplyEnemy.TakeForce();
             }
         }
+
+
+        FearMovement fearEnemy = collision.gameObject.GetComponent<FearMovement>();
+        if (fearEnemy != null)
+        {
+            if (!parry)
+            {
+                Vector3 hitPoint = collision.contacts[0].point;
+                fearEnemy.TakeDamage(damageAmount, hitPoint);
+            }
+            if (fearEnemy.rb != null)
+            {
+                fearEnemy.rb.AddForce(hitDirection * (slashForce * 0.6f), ForceMode.Impulse);
+                fearEnemy.TakeForce();
+            }
+        }
     }
 
     public void ParryHitbox()
