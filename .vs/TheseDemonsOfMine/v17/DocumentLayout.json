@@ -1,0 +1,160 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|c:\\users\\hilario.zavala\\documents\\github\\thesedemonsofmine\\assets\\scripts\\fear\\fearhitbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fear\\fearhitbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|c:\\users\\hilario.zavala\\documents\\github\\thesedemonsofmine\\assets\\scripts\\fear\\fearconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fear\\fearconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|c:\\users\\hilario.zavala\\documents\\github\\thesedemonsofmine\\assets\\scripts\\fear\\fearmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fear\\fearmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\assets\\scripts\\fear\\scytheattack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fear\\scytheattack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|c:\\users\\hilario.zavala\\documents\\github\\thesedemonsofmine\\assets\\scripts\\player\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\assets\\scripts\\player\\sword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\sword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|c:\\users\\hilario.zavala\\documents\\github\\thesedemonsofmine\\assets\\scripts\\player\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|c:\\users\\hilario.zavala\\documents\\github\\thesedemonsofmine\\assets\\scripts\\player\\parentconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5F2C4E2-DA50-AFF7-A5E2-C31A003FD31B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\parentconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FearHitbox.cs",
+              "DocumentMoniker": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Fear\\FearHitbox.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Fear\\FearHitbox.cs",
+              "ToolTip": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Fear\\FearHitbox.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Fear\\FearHitbox.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-13T08:32:32.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FearConnection.cs",
+              "DocumentMoniker": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Fear\\FearConnection.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Fear\\FearConnection.cs",
+              "ToolTip": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Fear\\FearConnection.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Fear\\FearConnection.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-13T08:30:36.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FearMovement.cs",
+              "DocumentMoniker": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Fear\\FearMovement.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Fear\\FearMovement.cs",
+              "ToolTip": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Fear\\FearMovement.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Fear\\FearMovement.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-13T08:30:10.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ScytheAttack.cs",
+              "DocumentMoniker": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Fear\\ScytheAttack.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Fear\\ScytheAttack.cs",
+              "ToolTip": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Fear\\ScytheAttack.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Fear\\ScytheAttack.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowB4AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-13T05:36:15.102Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PlayerHealth.cs",
+              "DocumentMoniker": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Player\\PlayerHealth.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\PlayerHealth.cs",
+              "ToolTip": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Player\\PlayerHealth.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Player\\PlayerHealth.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-13T08:14:01.15Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ParentConnection.cs",
+              "DocumentMoniker": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Player\\ParentConnection.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\ParentConnection.cs",
+              "ToolTip": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Player\\ParentConnection.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Player\\ParentConnection.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAQwGwAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-13T08:08:34.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PlayerController.cs",
+              "DocumentMoniker": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Player\\PlayerController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\PlayerController.cs",
+              "ToolTip": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Player\\PlayerController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Player\\PlayerController.cs",
+              "ViewState": "AgIAAL4AAAAAAAAAAAAjwDAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-13T08:08:11.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Sword.cs",
+              "DocumentMoniker": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Player\\Sword.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\Sword.cs",
+              "ToolTip": "C:\\Users\\Hilario.Zavala\\Documents\\GitHub\\TheseDemonsOfMine\\Assets\\Scripts\\Player\\Sword.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Player\\Sword.cs",
+              "ViewState": "AgIAAB0BAAAAAAAAAAAgwIYBAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-06T08:58:43.776Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
