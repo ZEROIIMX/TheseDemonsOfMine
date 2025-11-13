@@ -105,4 +105,10 @@ public class ParentConnection : MonoBehaviour
             GameManager.Instance.PlayerDied();
         }
     }
+
+    public void Spawned()
+    { 
+    playerController?.EnableControls();
+    sword?.EnableSword();
+    }
 }

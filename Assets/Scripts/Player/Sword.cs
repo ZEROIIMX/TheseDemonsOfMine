@@ -51,7 +51,7 @@ public class Sword : MonoBehaviour
     public bool isParrying = false;
     public bool isHeld = false;
 
-    public bool isDead = false;
+    public bool isDead = true;
 
     void Start()
     {
@@ -386,5 +386,10 @@ public class Sword : MonoBehaviour
     public void DisableSword()
     {
         isDead = true;
+    }
+
+    public void EnableSword()
+    {
+        isDead = false;
     }
 }

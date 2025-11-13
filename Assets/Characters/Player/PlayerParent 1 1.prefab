@@ -349,6 +349,7 @@ MonoBehaviour:
   parryCd: 3
   isParrying: 0
   isHeld: 0
+  isDead: 1
 --- !u!114 &3027433840155980550
 MonoBehaviour:
   m_ObjectHideFlags: 0

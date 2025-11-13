@@ -28,7 +28,7 @@ public class ScytheAttack : MonoBehaviour
 
     private IEnumerator HitboxCd()
     {
-        yield return new WaitForSeconds(.05f);
+        yield return new WaitForSeconds(.1f);
         hitbox.enabled = true;
     }
 

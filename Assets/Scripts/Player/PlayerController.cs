@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float worldBottomBounndary = -100f;
     (Vector3, Quaternion) initialPositionAndRotation;
 
-    private bool isDead = false;    
+    private bool isDead = true;    
 
     public void UseUnscaledTime(bool value)
     {
@@ -295,12 +295,17 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < worldBottomBounndary)
         {
             var (position, rotation) = initialPositionAndRotation;
-            Teleport(position, rotation);
+            Destroy(gameObject);
         }
     }
 
     public void DisableControls()
     {
         isDead = true;
+    }
+
+    public void EnableControls()
+    {
+        isDead = false;
     }
 }
