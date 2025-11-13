@@ -13,6 +13,8 @@ public class CloseDamage : MonoBehaviour
 
     private bool dead = false;
 
+    private bool playerDead = false;
+
     void Start()
     {
         m_animator = GetComponentInChildren<Animator>();
@@ -26,7 +28,7 @@ public class CloseDamage : MonoBehaviour
 
         cooldownTimer -= Time.deltaTime;
 
-        if (cooldownTimer <= 0 && !dead)
+        if (cooldownTimer <= 0 && !dead && !playerDead)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= attackDistance)
@@ -74,6 +76,21 @@ public class CloseDamage : MonoBehaviour
     public void Dead()
     { 
     dead = true;
+    }
+
+    void OnEnable()
+    {
+        PlayerEvents.OnPlayerDeath += HandlePlayerDeath;
+    }
+
+    void OnDisable()
+    {
+        PlayerEvents.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
+    private void HandlePlayerDeath()
+    {
+        playerDead = true;
     }
 }
 

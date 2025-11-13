@@ -22,13 +22,10 @@ public class MultiplyEnemy : MonoBehaviour
     public float spawnDelay = 2f;
     public float trackingDelay = 2f;
 
-    [Header("Death")]
-    public float deathAnimationDuration;
-
     [SerializeField] private GameObject hitVFXPrefab;
     [SerializeField] private GameObject AuraVFX;
 
-    private bool isDead;
+    private bool isDead = false;
     private bool isActivated = false;
     private bool trackingStarted = false;
     private bool wasCopy = false;
@@ -313,6 +310,21 @@ public class MultiplyEnemy : MonoBehaviour
         {
             groupUnits.Remove(unit);
         }
+    }
+    void OnEnable()
+    {
+        PlayerEvents.OnPlayerDeath += HandlePlayerDeath;
+    }
+
+    void OnDisable()
+    {
+        PlayerEvents.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
+    private void HandlePlayerDeath()
+    {
+        isTemporarilyStunned = true;
+        m_animator?.SetBool("Run", false);
     }
 
 }

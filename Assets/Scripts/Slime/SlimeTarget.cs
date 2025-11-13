@@ -23,6 +23,8 @@ public class SlimeTarget : MonoBehaviour
     private bool punch = true;
     private Coroutine punchCooldownRoutine;
 
+    private bool playerDead = false;
+
 
     void Start()
     {
@@ -93,7 +95,7 @@ public class SlimeTarget : MonoBehaviour
 
         else
         {
-            if (!isChasing && !slime.isStruggling && !slime.isDead && !hasGrabbed)
+            if (!isChasing && !slime.isStruggling && !slime.isDead && !hasGrabbed && !playerDead)
             {
                 isChasing = true;
                 slime.SetChaseState(true);
@@ -116,5 +118,21 @@ public class SlimeTarget : MonoBehaviour
         yield return new WaitForSeconds(grabCooldown);
         punchCooldownRoutine = null;
         grab = true;
+    }
+    void OnEnable()
+    {
+        PlayerEvents.OnPlayerDeath += HandlePlayerDeath;
+    }
+
+    void OnDisable()
+    {
+        PlayerEvents.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
+    private void HandlePlayerDeath()
+    {
+        isChasing = false;
+        playerDead = true;
+        m_animator.SetBool("Walk", false);
     }
 }

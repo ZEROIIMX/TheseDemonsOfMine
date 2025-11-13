@@ -22,8 +22,13 @@ public class PlayerHealth : MonoBehaviour
 
     private Sword playerSword;
 
+    private bool isDead = false;
+
+    private CharacterController controller;
+
     void Start()
     {
+        playerController = GetComponent<PlayerController>();
         playerSword = GetComponent<Sword>();
         playerController = GetComponent<PlayerController>();
         parentConnection = GetComponentInChildren<ParentConnection>();
@@ -36,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (!damaged)
+        if (!damaged && !isDead)
         {
             damaged = true;
             currentHealth = Mathf.Clamp(currentHealth - damage, 0f, maxHealth);
@@ -47,6 +52,8 @@ public class PlayerHealth : MonoBehaviour
 
             if (currentHealth <= 0)
             {
+                isDead = true;
+                PlayerEvents.OnPlayerDeath?.Invoke();
                 parentConnection?.Death();
                 playerController?.DisableControls();
                 playerSword?.DisableSword();

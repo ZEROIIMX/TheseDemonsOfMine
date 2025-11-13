@@ -52,7 +52,7 @@ NavMeshAgent:
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f36a88c605982144913f529a7eecb97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CloseDamage
-  attackDistance: 3
+  attackDistance: 8
   attackCooldown: 1.5
 --- !u!136 &2860390876238295509
 CapsuleCollider:
@@ -160,7 +160,6 @@ MonoBehaviour:
   spawnRadius: 3.5
   spawnDelay: 0.5
   trackingDelay: 0.5
-  deathAnimationDuration: 1
   hitVFXPrefab: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
   AuraVFX: {fileID: 7314526620251459061, guid: ccf28ea29cf499744ac31bab90073aba, type: 3}
   rb: {fileID: 0}
