@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 public class FearMovement : MonoBehaviour
 {
@@ -13,14 +11,20 @@ public class FearMovement : MonoBehaviour
     public float rotationSpeed = 10f;
     public float movementSpeed = 8f;
 
+    [Header("Teleportation")]
+    [SerializeField] private GameObject portalPrefab;
+    [SerializeField] private float teleportRange = 3f;
+    [SerializeField] private float teleportCooldown = 0f;
 
     [SerializeField] private GameObject hitVFXPrefab;
 
+    private float teleportTimer;
     private bool isDead;
     private bool isTemporarilyStunned = false;
     private bool damaged = false;
 
     public Transform Target;
+    private PlayerController playerController;
     private Animator m_animator;
     public Rigidbody rb;
     private NavMeshAgent agent;
@@ -47,13 +51,14 @@ public class FearMovement : MonoBehaviour
         }
 
         Target = AIManager.Instance.Target;
+        playerController = Target.GetComponent<PlayerController>();
     }
+
     private void Update()
     {
         if (isDead) return;
 
         RotateTowardPlayer();
-
         m_animator?.SetBool("Run", true);
 
         if (isTemporarilyStunned) return;
@@ -61,6 +66,7 @@ public class FearMovement : MonoBehaviour
         agent.isStopped = false;
         agent.destination = Target.position;
 
+        HandleTeleportation();
     }
 
     private void RotateTowardPlayer()
@@ -75,7 +81,44 @@ public class FearMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
     }
-        
+
+    private void HandleTeleportation()
+    {
+        teleportTimer -= Time.deltaTime;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, Target.position);
+        if (distanceToPlayer > teleportRange && teleportTimer <= 0f)
+        {
+            Vector3 predictedPosition = GetPlayerPredictedPosition();
+
+            // Spawn portal at current position
+            GameObject portalA = Instantiate(portalPrefab, transform.position, Quaternion.identity);
+
+            // Spawn portal at predicted position
+            GameObject portalB = Instantiate(portalPrefab, predictedPosition, Quaternion.identity);
+
+            // Teleport enemy
+            transform.position = predictedPosition;
+
+            // Clean up portals after 0.3 seconds
+            Destroy(portalA, 0.3f);
+            Destroy(portalB, 0.3f);
+
+            // Reset cooldown
+            teleportTimer = teleportCooldown;
+        }
+    }
+
+
+    private Vector3 GetPlayerPredictedPosition()
+    {
+        if (playerController != null)
+        {
+            return Target.position + playerController.GetVelocity() * Time.deltaTime;
+        }
+        return Target.position;
+    }
+
     public void TakeDamage(int damageAmount, Vector3 hitPoint)
     {
         if (isDead) return;

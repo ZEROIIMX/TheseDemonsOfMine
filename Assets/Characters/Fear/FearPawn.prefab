@@ -135,9 +135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565f02a60af4fbf4d8b93a795942b802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  Health: 1500
+  Health: 1200
   rotationSpeed: 10
   movementSpeed: 8
+  portalPrefab: {fileID: 3118087145514759983, guid: 5d532c2958b4afa45839ff7f49909e8e, type: 3}
+  teleportRange: 5
+  teleportCooldown: 2
   hitVFXPrefab: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
   Target: {fileID: 0}
   rb: {fileID: 0}
